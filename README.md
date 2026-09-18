@@ -13,11 +13,9 @@
 ## Dependencies
 
 The thematic redactors rely on the JS modules `compromise` and `compromise-dates`.
-Fixed versions are vendored locally under `/vendor`. See `vendor/MANIFEST.md` for
-exact versions and sources.
+Fixed versions are vendored locally under `/vendor`. See `vendor/MANIFEST.md` for exact versions and sources.
 
-Dependabot tracks upstream releases and opens a PR when a newer version is
-available. Updates must be vendored (downloaded and re-verified) manually.
+Dependabot tracks upstream releases and opens a PR when a newer version is available. Updates must be vendored (downloaded and re-verified) manually.
 
 Check for vulnerabilities on [socket.dev](socket.dev) to be safe.
 
