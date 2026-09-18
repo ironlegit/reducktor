@@ -70,33 +70,6 @@ async function copyClipboardContent() {
   setTimeout(() => (btn.innerHTML = '<i class="fa-solid fa-copy"></i>'), 1500);
 }
 
-// TOGGLE NAME REGION
-let nameRegion = "western";
-let currentRegionPath = `data/${nameRegion}_names.txt`;
-
-// Just sets the path for loadNames in main.js
-function toggleNameRegion() {
-  const selectedRadio = document.querySelector(
-    'input[name="regionMode"]:checked',
-  );
-
-  if (!selectedRadio) {
-    console.log("No region selected");
-    return;
-  }
-
-  nameRegion = selectedRadio.value;
-  currentRegionPath = NAMEREGIONMAP[nameRegion];
-  console.log(`Region set to: ${nameRegion}, path: ${currentRegionPath}`);
-}
-
-const NAMEREGIONMAP = {
-  western: "data/western_names.txt",
-  european: "data/european_names.txt",
-  asian: "data/asian_names.txt",
-  top_20_countries: "data/top_20_countries_names.txt",
-};
-
 // REDACTION PLACEHOLDER TOGGLE LOGIC
 
 // false is block style placeholder

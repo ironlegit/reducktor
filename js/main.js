@@ -39,6 +39,12 @@ async function redactOrgs() {
   });
 }
 
+async function redactNames() {
+  redactTxtDOM((txt) => {
+    return nlp(txt).people().replaceWith(getPlaceholder("name")).all().text();
+  });
+}
+
 async function redactEmails() {
   redactTxtDOM((txt) => {
     return nlp(txt).emails().replaceWith(getPlaceholder("email")).all().text();
@@ -104,7 +110,27 @@ function replaceWords(txt, words, replacement = "█████") {
   return txt.replace(regex, replacement);
 }
 
+function redactText() {
+  const patterns = document
+    .getElementById("redactPatterns")
+    .innerText.split("\n")
+    .map((p) => p.trim())
+    .filter((p) => p.length > 0);
+
+  if (patterns.length === 0) {
+    alert("Please enter patterns to redact.");
+    return;
+  }
+
+  redactTxtDOM((txt) => replaceWords(txt, patterns, getPlaceholder("custom")));
+}
+
+// DECREP
+// DECREP
+// DECREP
+// Might be interesting to rethink using other API
 // Cache for the name list (loaded once)
+
 let nameList = {};
 
 // TODO: International names + ignore case leads to false positives
@@ -125,22 +151,7 @@ async function loadNames() {
   return names;
 }
 
-async function redactNames() {
+async function redactNames_old() {
   const names = await loadNames();
   redactTxtDOM((txt) => replaceWords(txt, names, getPlaceholder("name")));
-}
-
-function redactText() {
-  const patterns = document
-    .getElementById("redactPatterns")
-    .innerText.split("\n")
-    .map((p) => p.trim())
-    .filter((p) => p.length > 0);
-
-  if (patterns.length === 0) {
-    alert("Please enter patterns to redact.");
-    return;
-  }
-
-  redactTxtDOM((txt) => replaceWords(txt, patterns, getPlaceholder("custom")));
 }

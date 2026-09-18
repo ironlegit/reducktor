@@ -7,6 +7,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
+# FIXME: This script is not use anymore since RESTCOUNTRIES is not available anymore for free.
+# FIXME: This script is not use anymore since RESTCOUNTRIES is not available anymore for free.
+# FIXME: This script is not use anymore since RESTCOUNTRIES is not available anymore for free.
+
 # NOTE: Debugging for edge cases: print(NameWrapper(nd.search("A-C")).describe)
 
 

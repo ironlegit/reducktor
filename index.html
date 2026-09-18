@@ -102,7 +102,7 @@
       <button
         class="redact-btn"
         onclick="redactNames()"
-        data-tooltip="Redact common first and last names (see sidebar)"
+        data-tooltip="Redact common human names"
       >
         Names
       </button>
@@ -187,50 +187,6 @@
               class="pill"
               data-tooltip="Use labelled placeholders: [REDACTED-DATE]"
               >Labelled</label
-            >
-          </div>
-        </div>
-
-        <div class="panel-section">
-          <p class="section-label">Name Regions</p>
-          <div class="pill-group" onchange="toggleNameRegion()">
-            <input
-              type="radio"
-              name="regionMode"
-              id="western"
-              value="western"
-              checked
-            />
-            <label for="western" class="pill" data-tooltip="Western Countries"
-              >Western</label
-            >
-
-            <input
-              type="radio"
-              name="regionMode"
-              id="european"
-              value="european"
-            />
-            <label for="european" class="pill" data-tooltip="European Countries"
-              >Europe</label
-            >
-
-            <input type="radio" name="regionMode" id="asian" value="asian" />
-            <label for="asian" class="pill" data-tooltip="Asian Countries"
-              >Asia</label
-            >
-
-            <input
-              type="radio"
-              name="regionMode"
-              id="top_20_countries"
-              value="top_20_countries"
-            />
-            <label
-              for="top_20_countries"
-              class="pill"
-              data-tooltip="Top 20 most populated countries"
-              >International</label
             >
           </div>
         </div>
