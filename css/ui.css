@@ -68,7 +68,9 @@
   border-radius: 8px; /* Rounded corners */
   line-height: 1.5; /* Line spacing for readability */
   resize: none; /* Disable manual resizing */
-  transition: var(--transition-base); /* Smooth transitions for all properties */
+  transition: var(
+    --transition-base
+  ); /* Smooth transitions for all properties */
   overflow-y: auto; /* Enable vertical scrolling if content overflows */
   padding: 20px; /* Internal spacing */
   color: var(--theme-color); /* Text color (changes with theme) */
@@ -182,7 +184,9 @@
   font-family: var(--font-pixel);
   font-size: 8px;
   cursor: pointer; /* Show hand cursor on hover */
-  transition: var(--transition-base); /* Smooth transitions for all properties */
+  transition: var(
+    --transition-base
+  ); /* Smooth transitions for all properties */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
