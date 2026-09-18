@@ -92,7 +92,7 @@
 
 #redactPatterns {
   flex: none;
-  height: 10vh;
+  height: 20vh;
   box-shadow: var(--shadow-panel); /* Shadow for depth (changes with theme) */
   margin: 0 auto; /* Center horizontally */
   width: 80%; /* Take 80% of the width */
