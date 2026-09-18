@@ -27,7 +27,19 @@ body.dark-mode {
 }
 
 /* HEADER STYLES */
-h1,
+.svg-container {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center;     /* Vertical centering  */
+  width: 100%;             /* Full width of parent */
+}
+
+.svg-container img {
+  width: 400px;           /* Set your desired width */
+  height: auto;           /* Maintain aspect ratio */
+  max-width: 100%;        /* Prevent overflow */
+}
+
 h4 {
   text-align: center; /* Center the text */
   margin: 10px auto; /* Space above and below, center horizontally */
@@ -35,16 +47,6 @@ h4 {
   color: var(--theme-color); /* Use theme-aware text color */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
   transition: color 0.3s ease; /* Smooth color transition when themes change */
-}
-
-h1 {
-  font-family: var(--font-pixel);
-  font-size: 64px; /* Large font size */
-  /* 3d FX */
-  text-shadow:
-    -4px -4px 0 rgba(126, 114, 217, 0.5),
-    4px 4px 0 rgba(128, 0, 128, 0.5);
-  letter-spacing: 12px;
 }
 
 h4 {

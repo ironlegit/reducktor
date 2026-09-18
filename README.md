@@ -1,10 +1,11 @@
-# Reducktor
+<p align="center">
+  <img src="assets/reducktor.svg" alt="flagr" width="320">
+</p>
 
-Reducktor is a web tool that can be used to redact sensitive information from text, such as emails, or logs. Useful applications include pasting content into an LLM or contacting support.
+**Re🦆tor** is a web tool that helps you remove sensitive information from text, including emails and log files. Use it to safely prepare text for pasting into an LLM chat or sharing with support.
 
 ## Features
 
-- Simple and lightweight HTML page.
 - **Thematic Redactors**: Use thematic redaction options (based on [Compromise](https://github.com/spencermountain/compromise)) to remove sensitive information from your text.
 - **Name Redactor**: Use experimental name redaction to remove common first and last names from different regions. The names were selected from the Python [names-dataset](https://pypi.org/project/names-dataset/).
 - **Custom Redactor**: Enter custom strings to remove sensitive information from your text.
