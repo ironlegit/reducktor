@@ -1,5 +1,13 @@
 <p align="center">
-  <img src="assets/reducktor.svg" alt="flagr" width="320">
+  <img src="assets/reducktor.svg" alt="reducktor" width="320">
+</p>
+
+<p align="center">
+  <a href="https://github.com/ironlegit/reducktor/tags"><img alt="Version" src="https://img.shields.io/github/v/tag/ironlegit/reducktor?filter=v*"></a>
+  <a href="https://sonarcloud.io/dashboard?id=ironlegit_reducktor"><img alt="Quality Gate Status" src="https://sonarcloud.io/api/project_badges/measure?project=ironlegit_reducktor&metric=alert_status"></a>
+  <a href="https://sonarcloud.io/dashboard?id=ironlegit_reducktor"><img alt="Maintainability Rating" src="https://sonarcloud.io/api/project_badges/measure?project=ironlegit_reducktor&metric=sqale_rating"></a>
+  <a href="https://sonarcloud.io/dashboard?id=ironlegit_reducktor"><img alt="Security Rating" src="https://sonarcloud.io/api/project_badges/measure?project=ironlegit_reducktor&metric=security_rating"></a>
+  <a href="https://sonarcloud.io/dashboard?id=ironlegit_reducktor"><img alt="Bugs" src="https://sonarcloud.io/api/project_badges/measure?project=ironlegit_reducktor&metric=bugs"></a>
 </p>
 
 **Re🦆tor** is a web tool that helps you remove sensitive information from text, including emails and log files. Use it to safely prepare text for pasting into an LLM chat or sharing with support.
