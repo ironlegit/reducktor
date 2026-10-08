@@ -2,7 +2,10 @@
 .clipboard-wrapper {
   width: calc(80% + 40px);
   max-width: 840px;
+  height: calc(40vh + 60px);
   max-height: calc(40vh + 60px); /* Make div not grow indefinitely*/
+  min-height: 0;
+  overflow: hidden;
   margin: 0 auto;
   border-radius: 8px;
   padding: 8px;
@@ -27,7 +30,7 @@
   border: 0px;
   border-radius: 8px; /* rounded top corners only */
   font-family: var(--font-pixel);
-  font-size: 8px;
+  font-size: 10px;
   color: var(--theme-color);
   cursor: pointer;
   background-color: var(--clipboard-bg-out); /* inactive = darker */
@@ -75,13 +78,14 @@
   padding: 20px; /* Internal spacing */
   color: var(--theme-color); /* Text color (changes with theme) */
   min-height: 0; /* Critical: Allows the textarea to shrink below its content height */
-  max-height: 100%; /* Ensures it doesn't exceed the container */
 }
 
 #clipboardIn,
 #clipboardOut {
   flex: 1;
   width: 100%;
+  min-height: 0;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
@@ -97,6 +101,7 @@
   margin: 0 auto; /* Center horizontally */
   width: 80%; /* Take 80% of the width */
   max-width: 800px; /* Maximum width */
+  max-height: 100%; /* Ensures it doesn't exceed the container */
 }
 
 /* BUTTON CONTAINER */
@@ -162,8 +167,8 @@
 
 /* BUTTON STYLES (applies to both toggle and redaction buttons)  */
 .toggle-btn {
-  width: 40px; /* Set explicit width */
-  height: 40px; /* Set equal height */
+  width: 45px; /* Set explicit width */
+  height: 45px; /* Set equal height */
   border-radius: 50%; /* Makes it circular */
   display: flex; /* Centers content inside */
   align-items: center;
@@ -182,7 +187,7 @@
   color: #ffffff; /* White text */
   border: none; /* No border */
   font-family: var(--font-pixel);
-  font-size: 8px;
+  font-size: 10px;
   cursor: pointer; /* Show hand cursor on hover */
   transition: var(
     --transition-base
