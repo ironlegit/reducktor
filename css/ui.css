@@ -30,7 +30,7 @@
   border: 0px;
   border-radius: 8px; /* rounded top corners only */
   font-family: var(--font-pixel);
-  font-size: 8px;
+  font-size: 10px;
   color: var(--theme-color);
   cursor: pointer;
   background-color: var(--clipboard-bg-out); /* inactive = darker */
@@ -167,8 +167,8 @@
 
 /* BUTTON STYLES (applies to both toggle and redaction buttons)  */
 .toggle-btn {
-  width: 40px; /* Set explicit width */
-  height: 40px; /* Set equal height */
+  width: 45px; /* Set explicit width */
+  height: 45px; /* Set equal height */
   border-radius: 50%; /* Makes it circular */
   display: flex; /* Centers content inside */
   align-items: center;
@@ -187,7 +187,7 @@
   color: #ffffff; /* White text */
   border: none; /* No border */
   font-family: var(--font-pixel);
-  font-size: 8px;
+  font-size: 10px;
   cursor: pointer; /* Show hand cursor on hover */
   transition: var(
     --transition-base
