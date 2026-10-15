@@ -12,13 +12,26 @@
 
 **Re🦆tor** is a web tool that helps you remove sensitive information from text, including emails and log files. Use it to safely prepare text for pasting into an LLM chat or sharing with support.
 
-## Features
+# Features
 
 - **Custom Redactor**: Enter custom strings to remove sensitive information from your text.
 - **Thematic Redactors**: Use thematic redaction options (based on [Compromise](https://github.com/spencermountain/compromise)) to remove sensitive information from your text.
 - **Name Redactor (decrepated)**: Use experimental name redaction to remove common first and last names from different regions. The names were selected from the Python [names-dataset](https://pypi.org/project/names-dataset/).
 
-## Dependencies
+## Reverse mode
+
+Swaps targets and replacements: "Peter /%/ Ruben" turns "Ruben" back into "Peter".
+Plain patterns without /%/ are ignored in reverse mode (no inverse exists).
+If two patterns map to the same replacement word, the last pair wins — choose unique replacements.
+
+## Privacy
+
+All patterns and replacements stay in your browser: nothing is stored,
+logged, or sent anywhere. Verify it yourself: open DevTools → Network tab,
+run a redaction — zero requests. This is enforced by Content-Security-Policy,
+not just by our code.
+
+# Dependencies
 
 The thematic redactors rely on the JS modules `compromise` and `compromise-dates`.
 Fixed versions are vendored locally under `/vendor`. See `vendor/MANIFEST.md` for exact versions and sources.
@@ -29,7 +42,7 @@ Fixed versions are vendored locally under `/vendor`. See `vendor/MANIFEST.md` fo
 
 > Check for vulnerabilities on [socket.dev](socket.dev) to be safe.
 
-## Local Testing
+# Local Testing
 
 From root folder run one of the following to start a local development server:
 
