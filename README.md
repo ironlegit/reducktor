@@ -18,11 +18,36 @@
 - **Thematic Redactors**: Use thematic redaction options (based on [Compromise](https://github.com/spencermountain/compromise)) to remove sensitive information from your text.
 - **Name Redactor (decrepated)**: Use experimental name redaction to remove common first and last names from different regions. The names were selected from the Python [names-dataset](https://pypi.org/project/names-dataset/).
 
-## Reverse mode
+## How to use
+
+## Thematic NLP 
+
+Use the buttons to replace patterns from the predefined categories (e.g., emails, places, and names) with functionalities from the compromise NLP library. The names category mostly covers Anglophone names.
+
+There are no API calls, the NLP library is vendored locally and runs client-side.
+
+## Custom word patterns
+
+Write one pattern per line in the pattern box; each line is redacted wherever
+it appears in the text, using your selected placeholder style.
+
+To replace a word with a specific word instead of the placeholder, write
+`target /%/ replacement` — for example, `Peter /%/ Reuben` turns every
+"Peter" in the text into "Reuben". (Spaces around `/%/` are optional:
+`Peter/%/Reuben` works the same.)
+
+### Edge cases
+   Case | Patterns in the box | Text | Result |
+ |---|---|---|---|
+ | Substring safety | `Peter` | `Peterson met Peter.` | `Peterson met █████.` — patterns match whole words only, never inside longer words |
+ | Pair beats plain | `Peter /%/ Reuben` and `Peter` | `Peter called.` | `Reuben called.` — `/%/` pairs always take precedence over plain patterns, regardless of line order |
+ | Last pair wins | `Peter /%/ Reuben` and `Peter /%/ Günther` | `Peter called.` | `Günther called.` — when two pairs share a target, the last line is applied |
+ | Word boundaries | `Peter` | `Peter, #Peter, Peter! … 1Peter, aPeter` | `█████, #█████, █████! … 1Peter, aPeter` — letters and digits count as word characters, punctuation and `#` don't |
+
+### Reverse mode
 
 Swaps targets and replacements: "Peter /%/ Ruben" turns "Ruben" back into "Peter".
-Plain patterns without /%/ are ignored in reverse mode (no inverse exists).
-If two patterns map to the same replacement word, the last pair wins — choose unique replacements.
+Plain patterns without /%/ are ignored in reverse mode. If two patterns map to the same replacement word, the last pair wins — choose unique replacements.
 
 ## Privacy
 
