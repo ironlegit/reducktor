@@ -115,55 +115,77 @@ async function redactDates() {
  * No persistence, no network, no logging of pattern content.
  */
 
+// Size cap to reduce attack surface
 const RP_LIMITS = { maxPatterns: 500, maxPatternLength: 200 };
-const RP_SEPARATOR = /\s*\/%\/\s*/; // optional whitespace around the separator
+// TODO: Allow trailing whitespaces? "Peter /%/ Reuben" vs "Peter/%/Reuben"
+const RP_SEPARATOR = /\s*\/%\/\s*/;
 const RP_SEPARATOR_LITERAL = "/%/";
 
-function escapeRegExp(s) {
+// Escape Regex metachars, quantifiers and wildcards
+// Example: "C++" results as "C\+\+"
+function escapeRegexMeta(s) {
+  // "$&" -> use entire matched substring
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+// Parser for redaction-clipboard
+// Parses each line and creates plain (w/o replacement) or pair (w replacements) patterns
 function parsePatternLines(rawLines) {
   const pairs = []; // [target, replacement]
-  const plain = new Set(); // patterns -> default placeholder
+  const plain = new Set(); // patterns replaced by default placeholder
   let count = 0;
 
   for (const raw of rawLines) {
+    // Gates: Trim, skip empty lines and enforce size caps
     const line = raw.trim();
     if (!line) continue;
     if (++count > RP_LIMITS.maxPatterns) break;
     if (line.length > RP_LIMITS.maxPatternLength) continue;
 
+    // Patterns w/o replacement
     if (!line.includes(RP_SEPARATOR_LITERAL)) {
       plain.add(line);
       continue;
     }
 
-    // Everything after the FIRST separator is the replacement, so extra
-    // separators stay literal and behavior stays predictable.
+    // Note: Everything after the FIRST separator is the replacement
+    // Any additional separators stay literal to keep behavior stays predictable
+    // Example: "a/%/b/%/c" on "a" yields "b/%/c", no double swapping
     const [target, ...rest] = line.split(RP_SEPARATOR);
     const replacement = rest.join(RP_SEPARATOR_LITERAL).trim();
 
     if (target && replacement) {
       pairs.push([target, replacement]);
     } else if (target) {
-      plain.add(target); // "Peter/%/": no inverse, redact normally
+      // Handle patterns with a replacement seperator but not replacement
+      // Example: "Peter/%/": no inverse, redact normally
+      plain.add(target);
     }
   }
   return { pairs, plain };
 }
 
+// Build map of all the plain and paired patterns
+// Cave: Paired patterns take precendence over plain ones!
+// Example:
+// Peter /%/ Reuben
+// Peter
+//
+// The plain pattern is ignored, Peter is replaced by Reuben.
 function buildPatternMap(rawLines, reversed) {
   const { pairs, plain } = parsePatternLines(rawLines);
   const map = new Map();
 
+  // Reverse order of the pairs when reverse is on
+  // Note: Plain patterns are never reversed, information is destroyed.
   if (reversed) {
-    // Plain patterns have no inverse and are ignored (documented in README).
+    // Plain patterns have no inverse and are ignored
     // Edge case: duplicate replacement words are ambiguous; last pair wins.
     for (const [target, replacement] of pairs) {
       map.set(replacement, target);
     }
   } else {
+    //
     for (const p of plain) map.set(p, null);
     // Pairs are set last: they always win over a plain pattern for the
     // same word, regardless of line order.
@@ -174,16 +196,18 @@ function buildPatternMap(rawLines, reversed) {
   return map;
 }
 
+// Build Regex pattern
+// Note: Requires lookbehind (all modern browsers, Safari 16.4+).
 function buildRedactionRegex(targets) {
-  // Longest-first so "Peterson" wins over "Peter". Every target is
-  // escaped, so user input can never inject regex syntax.
   const alternation = [...targets]
+    // Longest-first so "Peterson" wins over "Peter".
     .sort((a, b) => b.length - a.length)
-    .map(escapeRegExp)
+    // Escape meta chars
+    .map(escapeRegexMeta)
     .join("|");
 
-  // Unicode-aware boundaries: also matches "Peter!" or "#Peter", which
-  // \b misses. Requires lookbehind (all modern browsers, Safari 16.4+).
+  console.log(alternation);
+  // Note: Unicode-aware boundaries also matches "Peter!" or "#Peter", but not "1Peter" or "aPeter"
   return new RegExp(
     `(?<![\\p{L}\\p{N}_])(?:${alternation})(?![\\p{L}\\p{N}_])`,
     "gu",
@@ -198,6 +222,8 @@ function applyPatterns(txt, patternMap, defaultReplacement) {
   // Function replacer: prevents "$&"/"$1" substitution in replacement
   // strings, and a single pass guarantees replacements are never
   // re-processed by other patterns.
+
+  // Coalescing is used to handle pairs (LHS) or plain (RHS)
   return txt.replace(
     regex,
     (match) => patternMap.get(match) ?? defaultReplacement,
@@ -217,6 +243,7 @@ function redactText(reversed = false) {
       applyPatterns(txt, patterns, getPlaceholder("custom")),
     );
   } finally {
-    patterns.clear(); // drop all pattern references as soon as the run ends
+    // drop all pattern references after redaction
+    patterns.clear();
   }
 }
