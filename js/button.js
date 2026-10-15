@@ -98,3 +98,17 @@ function getPlaceholder(type) {
     return PLACEHOLDERS[type].labelled;
   }
 }
+
+// REDACT + REVERSE BUTTONS
+let reversed = false;
+const reverseBtn = document.getElementById("reverseBtn");
+
+document.getElementById("redactBtn").addEventListener("click", () => {
+  redactText(reversed);
+});
+
+reverseBtn.addEventListener("click", () => {
+  reversed = !reversed;
+  reverseBtn.setAttribute("aria-pressed", String(reversed));
+  reverseBtn.textContent = reversed ? "Reverse: on" : "Reverse: off";
+});

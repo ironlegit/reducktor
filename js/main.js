@@ -22,11 +22,6 @@ async function redactTxtDOM(redactFunc, replacement = "█████") {
   switchToOut();
 }
 
-// Strategy: Regex-based patterns
-function replacePattern(txt, regex, replacement = "█████") {
-  return txt.replace(regex, replacement);
-}
-
 // Custom entity level function
 // NOTE: To debug Compromise tokens use console.log(JSON.stringify(nlp(txt).places().json(), null, 2));
 async function redactOrgs() {
@@ -51,17 +46,23 @@ async function redactEmails() {
   });
 }
 
-async function redactPlaces(txt) {
+async function redactPlaces() {
   redactTxtDOM((txt) => {
     console.log(nlp(txt).places());
     return nlp(txt).places().replaceWith(getPlaceholder("place")).all().text();
   });
 }
 
+// Comrpomise fails for international formats
 async function redactPhones() {
   const phoneRegex =
     /(?<!\S)(?:\+?(\d{1,4}))?[-. (]*(\d{2,3})[-. )]*(\d{3})[-. ]*(\d{3,4})(?: *x(\d+))?/g;
   redactTxtDOM((txt) => replacePattern(txt, phoneRegex));
+}
+
+// Strategy: Regex-based patterns for phone numbers
+function replacePattern(txt, regex, replacement = "█████") {
+  return txt.replace(regex, replacement);
 }
 
 // Handling dates with compromise date (distinct logic)
@@ -95,63 +96,127 @@ async function redactDates() {
   });
 }
 
-// Strategy: Use NLP-extracted entities and name lists with word boundaries
-function replaceWords(txt, words, replacement = "█████") {
-  if (words.length === 0) return txt;
+// Strategy: Use regex with word boundaries for custom words
+/*
+ * Custom word redaction — pattern engine (drop-in replacement for
+ * replaceWords() + redactText()).
+ *
+ * Syntax (one pattern per line):
+ *   Peter /%/ Ruben   → "Peter" is replaced by "Ruben"
+ *   Peter/%/Ruben     → same (whitespace around /%/ is optional)
+ *   Peter/%/          → degrades to a plain redaction (default placeholder)
+ *   Username          → redacted with the default placeholder
+ *
+ * Reverse mode swaps targets and replacements ("Ruben" becomes "Peter").
+ * Plain patterns are ignored in reverse mode (no inverse exists).
+ * If two pairs share a replacement word, the LAST pair wins (see README).
+ *
+ * Privacy: patterns and replacements stay in memory only.
+ * No persistence, no network, no logging of pattern content.
+ */
 
-  // Sort to avoid sub-string / prefix matching
-  const escaped = words
+const RP_LIMITS = { maxPatterns: 500, maxPatternLength: 200 };
+const RP_SEPARATOR = /\s*\/%\/\s*/; // optional whitespace around the separator
+const RP_SEPARATOR_LITERAL = "/%/";
+
+function escapeRegExp(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function parsePatternLines(rawLines) {
+  const pairs = []; // [target, replacement]
+  const plain = new Set(); // patterns -> default placeholder
+  let count = 0;
+
+  for (const raw of rawLines) {
+    const line = raw.trim();
+    if (!line) continue;
+    if (++count > RP_LIMITS.maxPatterns) break;
+    if (line.length > RP_LIMITS.maxPatternLength) continue;
+
+    if (!line.includes(RP_SEPARATOR_LITERAL)) {
+      plain.add(line);
+      continue;
+    }
+
+    // Everything after the FIRST separator is the replacement, so extra
+    // separators stay literal and behavior stays predictable.
+    const [target, ...rest] = line.split(RP_SEPARATOR);
+    const replacement = rest.join(RP_SEPARATOR_LITERAL).trim();
+
+    if (target && replacement) {
+      pairs.push([target, replacement]);
+    } else if (target) {
+      plain.add(target); // "Peter/%/": no inverse, redact normally
+    }
+  }
+  return { pairs, plain };
+}
+
+function buildPatternMap(rawLines, reversed) {
+  const { pairs, plain } = parsePatternLines(rawLines);
+  const map = new Map();
+
+  if (reversed) {
+    // Plain patterns have no inverse and are ignored (documented in README).
+    // Edge case: duplicate replacement words are ambiguous; last pair wins.
+    for (const [target, replacement] of pairs) {
+      map.set(replacement, target);
+    }
+  } else {
+    for (const p of plain) map.set(p, null);
+    // Pairs are set last: they always win over a plain pattern for the
+    // same word, regardless of line order.
+    for (const [target, replacement] of pairs) {
+      map.set(target, replacement);
+    }
+  }
+  return map;
+}
+
+function buildRedactionRegex(targets) {
+  // Longest-first so "Peterson" wins over "Peter". Every target is
+  // escaped, so user input can never inject regex syntax.
+  const alternation = [...targets]
     .sort((a, b) => b.length - a.length)
-    .map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    .map(escapeRegExp)
+    .join("|");
 
-  // TODO: Custom word boundaries that may end with punctuation instead of just whitespace
-  const regex = new RegExp(`\\b(${escaped.join("|")})`, "g");
-
-  return txt.replace(regex, replacement);
+  // Unicode-aware boundaries: also matches "Peter!" or "#Peter", which
+  // \b misses. Requires lookbehind (all modern browsers, Safari 16.4+).
+  return new RegExp(
+    `(?<![\\p{L}\\p{N}_])(?:${alternation})(?![\\p{L}\\p{N}_])`,
+    "gu",
+  );
 }
 
-function redactText() {
-  const patterns = document
-    .getElementById("redactPatterns")
-    .innerText.split("\n")
-    .map((p) => p.trim())
-    .filter((p) => p.length > 0);
+function applyPatterns(txt, patternMap, defaultReplacement) {
+  if (patternMap.size === 0) return txt;
 
-  if (patterns.length === 0) {
-    alert("Please enter patterns to redact.");
-    return;
+  const regex = buildRedactionRegex(patternMap.keys());
+
+  // Function replacer: prevents "$&"/"$1" substitution in replacement
+  // strings, and a single pass guarantees replacements are never
+  // re-processed by other patterns.
+  return txt.replace(
+    regex,
+    (match) => patternMap.get(match) ?? defaultReplacement,
+  );
+}
+
+function redactText(reversed = false) {
+  const el = document.getElementById("redactPatterns");
+  const patterns = buildPatternMap(el.innerText.split("\n"), reversed);
+
+  try {
+    if (patterns.size === 0) {
+      alert("Please enter patterns to redact.");
+      return;
+    }
+    redactTxtDOM((txt) =>
+      applyPatterns(txt, patterns, getPlaceholder("custom")),
+    );
+  } finally {
+    patterns.clear(); // drop all pattern references as soon as the run ends
   }
-
-  redactTxtDOM((txt) => replaceWords(txt, patterns, getPlaceholder("custom")));
-}
-
-// DECREP
-// DECREP
-// DECREP
-// Might be interesting to rethink using other API
-// Cache for the name list (loaded once)
-
-let nameList = {};
-
-// TODO: International names + ignore case leads to false positives
-async function loadNames() {
-  if (!currentRegionPath) {
-    console.error("No region selected");
-    return;
-  }
-  // Return cached list if already loaded
-  if (nameList[currentRegionPath]) return nameList[currentRegionPath];
-
-  const response = await fetch(currentRegionPath);
-  const text = await response.text();
-  const names = text.split("\n").filter((name) => name.trim().length > 0);
-
-  nameList[currentRegionPath] = names;
-  console.log(names);
-  return names;
-}
-
-async function redactNames_old() {
-  const names = await loadNames();
-  redactTxtDOM((txt) => replaceWords(txt, names, getPlaceholder("name")));
 }
