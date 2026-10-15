@@ -152,13 +152,18 @@
     <div
       id="redactPatterns"
       contenteditable="true"
-      placeholder="Enter patterns to redact (one per line)."
+      placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
     ></div>
 
     <!-- BUTTON CONTAINER CUSTOM -->
     <div class="button-container">
       <button class="redact-btn" id="redactBtn">Redact Custom Text</button>
-      <button class="redact-btn" id="reverseBtn" aria-pressed="false">
+      <button
+        class="redact-btn"
+        id="reverseBtn"
+        aria-pressed="false"
+        data-tooltip="Reverses the order of the redaction pattern."
+      >
         Reverse: off
       </button>
     </div>
