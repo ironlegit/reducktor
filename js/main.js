@@ -249,9 +249,9 @@ function redactText(reversed = false) {
 
 const DEMO_TEXT = `My name is Peter from Sweden and I am getting this error message:
 [2026-10-15 14:32:45] INFO: Initializing payment service
-[2026-10-15 14:32:46] DEBUG: Connecting to CashMoney API with key: cm_live_51HyJ4K2eZvX9mPqL7nR8sT9uV0wXyZ1aB2cD3eF4gH5iJ6kL7mN8oP9qR0sTu1vW
+[2026-10-15 14:32:46] DEBUG: Connecting to CashMoney API with key: cm_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW
 [2026-10-15 14:32:47] INFO: Authentication successful
-[2026-10-15 14:32:48] ERROR: Failed to process payment. Response: {"error": "Invalid card", "api_key_used": "cm_live_51HyJ4K2eZvX9mPqL7nR8sT9uV0wXyZ1aB2cD3eF4gH5iJ6kL7mN8oP9qR0sTu1vW"}
+[2026-10-15 14:32:48] ERROR: Failed to process payment. Response: {"error": "Invalid card", "api_key_used": "cm_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW"}
 
 
 My username is peter@cashmoney.com by the way.
@@ -260,7 +260,7 @@ My username is peter@cashmoney.com by the way.
 const DEMO_PATTERNS =
   "Peter /%/ Reuben" +
   "\n" +
-  "cm_live_51HyJ4K2eZvX9mPqL7nR8sT9uV0wXyZ1aB2cD3eF4gH5iJ6kL7mN8oP9qR0sTu1vW";
+  "cm_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW";
 
 document.getElementById("demoBtn").addEventListener("click", () => {
   document.getElementById("clipboardIn").innerText = DEMO_TEXT;
