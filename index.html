@@ -3,6 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <meta -->
+    <!--   http-equiv="Content-Security-Policy" -->
+    <!--   content="default-src 'none'; -->
+    <!--            script-src 'self'; -->
+    <!--            style-src 'self'; -->
+    <!--            img-src 'self' data:; -->
+    <!--            connect-src 'none'; -->
+    <!--            form-action 'none'; -->
+    <!--            base-uri 'none'" -->
+    <!-- /> -->
     <title>Re███tor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -93,7 +103,7 @@
 
     <!-- BUTTON CONTAINER PRESET -->
     <div class="button-container-exp">
-      <span class="experimental-label">THEMATIC REDACTORS</span>
+      <span class="experimental-label">THEMATIC NLP REDACTORS </span>
       <button
         class="redact-btn"
         onclick="redactOrgs()"
@@ -142,13 +152,19 @@
     <div
       id="redactPatterns"
       contenteditable="true"
-      placeholder="Enter patterns to redact (one per line)."
+      placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
     ></div>
 
     <!-- BUTTON CONTAINER CUSTOM -->
     <div class="button-container">
-      <button class="redact-btn" onclick="redactText()">
-        Redact Custom Text
+      <button class="redact-btn" id="redactBtn">Redact Custom Text</button>
+      <button
+        class="redact-btn"
+        id="reverseBtn"
+        aria-pressed="false"
+        data-tooltip="Reverses the order of the redaction pattern."
+      >
+        Reverse: off
       </button>
     </div>
 
@@ -159,6 +175,10 @@
     <aside class="side-panel">
       <button class="close-btn" onclick="togglePanel()">×</button>
       <div class="panel-content">
+        <h2 class="panel-title">Demo mode</h2>
+        <div class="button-container">
+          <button class="redact-btn" id="demoBtn">Load Example</button>
+        </div>
         <h2 class="panel-title">Redaction Parameters</h2>
 
         <div class="panel-section">
