@@ -50,14 +50,14 @@
     <h4>A Text Redaction Tool</h4>
     <!-- SIDE PANEL TOGGLE -->
     <div class="toggle-container left">
-      <button id="sidebar-btn" class="toggle-btn" onclick="togglePanel()">
+      <button id="sidebar-btn" class="toggle-btn">
         <i class="fas fa-bars"></i>
       </button>
     </div>
 
     <!-- DARK MODE TOGGLE BUTTON CONTAINER -->
     <div class="toggle-container right">
-      <button id="darkmode-btn" class="toggle-btn" onclick="toggleDarkMode()">
+      <button id="darkmode-btn" class="toggle-btn">
         <i class="fa-solid fa-moon"></i>
       </button>
     </div>
@@ -68,7 +68,6 @@
         <button
           class="tabBtn active"
           id="tabIn"
-          onclick="switchToIn()"
           data-tooltip="View the original text"
         >
           Original
@@ -76,17 +75,11 @@
         <button
           class="tabBtn"
           id="tabOut"
-          onclick="switchToOut()"
           data-tooltip="View the redacted version"
         >
           Redacted
         </button>
-        <button
-          class="tabBtn"
-          id="flushBtn"
-          onclick="flushButtonAction()"
-          data-tooltip="Flush Output"
-        >
+        <button class="tabBtn" id="flushBtn" data-tooltip="Flush Output">
           <i class="fas fa-trash-can"></i>
         </button>
       </div>
@@ -98,7 +91,7 @@
           placeholder="Dump your text here..."
         ></div>
         <div id="clipboardOut" contenteditable="false"></div>
-        <button class="tabBtn" id="copyBtn" onclick="copyClipboardContent()">
+        <button class="tabBtn" id="copyBtn">
           <i class="fa-solid fa-copy"></i>
         </button>
       </div>
@@ -107,48 +100,12 @@
     <!-- BUTTON CONTAINER PRESET -->
     <div class="button-container-exp">
       <span class="experimental-label">THEMATIC NLP REDACTORS </span>
-      <button
-        class="redact-btn"
-        onclick="redactOrgs()"
-        data-tooltip="Redact common organizations"
-      >
-        Orgs
-      </button>
-      <button
-        class="redact-btn"
-        onclick="redactNames()"
-        data-tooltip="Redact common human names"
-      >
-        Names
-      </button>
-      <button
-        class="redact-btn"
-        onclick="redactDates()"
-        data-tooltip="Redact common date formats"
-      >
-        Dates
-      </button>
-      <button
-        class="redact-btn"
-        onclick="redactPhones()"
-        data-tooltip="Redact wide-number of phone number formats"
-      >
-        Phones
-      </button>
-      <button
-        class="redact-btn"
-        onclick="redactEmails()"
-        data-tooltip="Redact email addresses"
-      >
-        Emails
-      </button>
-      <button
-        class="redact-btn"
-        onclick="redactPlaces()"
-        data-tooltip="Redact country and city names"
-      >
-        Places
-      </button>
+      <button class="redact-btn" id="redact-orgs-btn">Orgs</button>
+      <button class="redact-btn" id="redact-names-btn">Names</button>
+      <button class="redact-btn" id="redact-dates-btn">Dates</button>
+      <button class="redact-btn" id="redact-phones-btn">Phones</button>
+      <button class="redact-btn" id="redact-emails-btn">Emails</button>
+      <button class="redact-btn" id="redact-places-btn">Places</button>
     </div>
 
     <!-- REDACTION PATTERNS TEXT AREA -->
@@ -172,11 +129,11 @@
     </div>
 
     <!-- Backdrop -->
-    <div class="panel-backdrop" onclick="togglePanel()"></div>
+    <div class="panel-backdrop" id="panelBackdrop"></div>
 
     <!-- SIDE PANEL -->
     <aside class="side-panel">
-      <button class="close-btn" onclick="togglePanel()">×</button>
+      <button class="close-btn" id="panelCloseBtn">×</button>
       <div class="panel-content">
         <h2 class="panel-title">Demo mode</h2>
         <div class="button-container">
@@ -186,7 +143,7 @@
 
         <div class="panel-section">
           <p class="section-label">Redaction Placeholder</p>
-          <div class="pill-group" onchange="toggleRedactionPlaceholder()">
+          <div class="pill-group" id="placeholderMode">
             <input
               type="radio"
               name="placeholderMode"
