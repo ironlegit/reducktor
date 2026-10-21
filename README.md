@@ -20,7 +20,7 @@
 
 ## How to use
 
-## Thematic NLP 
+## Thematic NLP
 
 Use the buttons to replace patterns from the predefined categories (e.g., emails, places, and names) with functionalities from the compromise NLP library. The names category mostly covers Anglophone names.
 
@@ -37,12 +37,13 @@ To replace a word with a specific word instead of the placeholder, write
 `Peter/%/Reuben` works the same.)
 
 ### Edge cases
-   Case | Patterns in the box | Text | Result |
- |---|---|---|---|
- | Substring safety | `Peter` | `Peterson met Peter.` | `Peterson met █████.` — patterns match whole words only, never inside longer words |
- | Pair beats plain | `Peter /%/ Reuben` and `Peter` | `Peter called.` | `Reuben called.` — `/%/` pairs always take precedence over plain patterns, regardless of line order |
- | Last pair wins | `Peter /%/ Reuben` and `Peter /%/ Günther` | `Peter called.` | `Günther called.` — when two pairs share a target, the last line is applied |
- | Word boundaries | `Peter` | `Peter, #Peter, Peter! … 1Peter, aPeter` | `█████, #█████, █████! … 1Peter, aPeter` — letters and digits count as word characters, punctuation and `#` don't |
+
+| Case             | Patterns in the box                        | Text                                     | Result                                                                                                            |
+| ---------------- | ------------------------------------------ | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Substring safety | `Peter`                                    | `Peterson met Peter.`                    | `Peterson met █████.` — patterns match whole words only, never inside longer words                                |
+| Pair beats plain | `Peter /%/ Reuben` and `Peter`             | `Peter called.`                          | `Reuben called.` — `/%/` pairs always take precedence over plain patterns, regardless of line order               |
+| Last pair wins   | `Peter /%/ Reuben` and `Peter /%/ Günther` | `Peter called.`                          | `Günther called.` — when two pairs share a target, the last line is applied                                       |
+| Word boundaries  | `Peter`                                    | `Peter, #Peter, Peter! … 1Peter, aPeter` | `█████, #█████, █████! … 1Peter, aPeter` — letters and digits count as word characters, punctuation and `#` don't |
 
 ### Reverse mode
 
@@ -75,3 +76,19 @@ From root folder run one of the following to start a local development server:
 - `python -m http.server 8000`
 
 Open localhost in browser for testing.
+
+# Credits
+
+All fonts and icons are self-hosted; nothing is loaded from third-party servers.
+
+- **[Syne Mono](https://fonts.google.com/specimen/Syne+Mono)** — originally designed
+  in 2017 by Bonjour Monde (Lucas Descroix) for the Art Center "Synesthésie",
+  Saint-Denis. Licensed under the SIL Open Font License 1.1
+  ([license file](assets/fonts/syne-mono-OFL.txt)). Served: latin, latin-ext.
+- **[Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P)** — designed
+  by CodeMan38, based on the font design of 1980s Namco arcade games. Licensed
+  under the SIL Open Font License 1.1
+  ([license file](assets/fonts/press-start-2p-OFL.txt)). Served: latin, latin-ext.
+- **Font Awesome Free 6.5.0** — © Fonticons, Inc. Icons licensed under
+  CC BY 4.0, fonts under the SIL Open Font License 1.1, code under the MIT
+  License ([license file](assets/fontawesome/LICENSE.txt)).
