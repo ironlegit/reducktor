@@ -112,3 +112,46 @@ reverseBtn.addEventListener("click", () => {
   reverseBtn.setAttribute("aria-pressed", String(reversed));
   reverseBtn.textContent = reversed ? "Reverse: on" : "Reverse: off";
 });
+
+// EVENT WIRING
+// CSP does not allow inline handlers (onclick/onchange)
+// Every interactive element is wired by its id
+document.getElementById("sidebar-btn").addEventListener("click", togglePanel);
+document.getElementById("panelBackdrop").addEventListener("click", togglePanel);
+document.getElementById("panelCloseBtn").addEventListener("click", togglePanel);
+document
+  .getElementById("darkmode-btn")
+  .addEventListener("click", toggleDarkMode);
+document.getElementById("tabIn").addEventListener("click", switchToIn);
+document.getElementById("tabOut").addEventListener("click", switchToOut);
+document
+  .getElementById("flushBtn")
+  .addEventListener("click", flushButtonAction);
+document
+  .getElementById("copyBtn")
+  .addEventListener("click", copyClipboardContent);
+
+// Thematic NLP redactors
+document
+  .getElementById("redact-orgs-btn")
+  .addEventListener("click", redactOrgs);
+document
+  .getElementById("redact-names-btn")
+  .addEventListener("click", redactNames);
+document
+  .getElementById("redact-dates-btn")
+  .addEventListener("click", redactDates);
+document
+  .getElementById("redact-phones-btn")
+  .addEventListener("click", redactPhones);
+document
+  .getElementById("redact-emails-btn")
+  .addEventListener("click", redactEmails);
+document
+  .getElementById("redact-places-btn")
+  .addEventListener("click", redactPlaces);
+
+// Redaction placeholder (Block / Labelled) radio pills
+document
+  .getElementById("placeholderMode")
+  .addEventListener("change", toggleRedactionPlaceholder);
