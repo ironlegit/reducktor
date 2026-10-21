@@ -1,0 +1,42 @@
+name: Vendor audit
+
+on:
+  pull_request:
+    paths:
+      - "package.json"
+      - "package-lock.json"
+      - "vendor/**"
+      - "scripts/vendor-audit.sh"
+      - ".github/workflows/vendor-audit.yml"
+  push:
+    branches: [main]
+    paths:
+      - "package.json"
+      - "package-lock.json"
+      - "vendor/**"
+      - "scripts/vendor-audit.sh"
+      - ".github/workflows/vendor-audit.yml"
+  workflow_dispatch:
+
+jobs:
+  vendor-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Reinstall from lockfile, regenerate vendor/, grep for exfil sinks
+        run: bash scripts/vendor-audit.sh
+
+      - name: Verify vendor/ matches lockfile build output
+        run: |
+          if ! git diff --exit-code -- vendor/; then
+            echo "::error::vendor/ differs from the lockfile build output."
+            echo "Commit the regenerated vendor/ files (the audit script just wrote them)."
+            exit 1
+          fi
