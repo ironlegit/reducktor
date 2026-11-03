@@ -22,9 +22,11 @@ jobs:
   vendor-audit:
     runs-on: ubuntu-latest
     steps:
+      # GitHub-official action: clones this repo into the runner's workspace
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
+      # GitHub-official action: installs the Node.js version below and puts it on PATH
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
