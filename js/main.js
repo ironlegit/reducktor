@@ -216,10 +216,14 @@ function buildRedactionRegex(targets) {
     .join("|");
 
   // Note: Unicode-aware boundaries also matches "Peter!" or "#Peter", but not "1Peter" or "aPeter"
-  return new RegExp(
-    `(?<![\\p{L}\\p{N}_])(?:${alternation})(?![\\p{L}\\p{N}_])`,
-    "gu",
-  );
+  try {
+    return new RegExp(
+      `(?<![\\p{L}\\p{N}_])(?:${alternation})(?![\\p{L}\\p{N}_])`,
+      "gu",
+    );
+  } catch {
+    return null;
+  }
 }
 
 function applyPatterns(txt, patternMap, defaultReplacement) {
