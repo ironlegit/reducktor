@@ -176,11 +176,6 @@ function parsePatternLines(rawLines) {
 
 // Build map of all the plain and paired patterns
 // Cave: Paired patterns take precendence over plain ones!
-// Example:
-// Peter /%/ Reuben
-// Peter
-//
-// The plain pattern is ignored, Peter is replaced by Reuben.
 function buildPatternMap(rawLines, reversed) {
   const { pairs, plain } = parsePatternLines(rawLines);
   const map = new Map();
