@@ -34,15 +34,15 @@
     <h4>A Text Redaction Tool</h4>
     <!-- SIDE PANEL TOGGLE -->
     <div class="toggle-container left">
-      <button id="sidebar-btn" class="toggle-btn">
-        <i class="fas fa-bars"></i>
+      <button id="sidebar-btn" class="toggle-btn" aria-label="Settings Panel">
+        <i class="fas fa-bars" aria-hidden="true"></i>
       </button>
     </div>
 
     <!-- DARK MODE TOGGLE BUTTON CONTAINER -->
     <div class="toggle-container right">
-      <button id="darkmode-btn" class="toggle-btn">
-        <i class="fa-solid fa-moon"></i>
+      <button id="darkmode-btn" class="toggle-btn" aria-label="Dark mode">
+        <i class="fa-solid fa-moon" aria-hidden="true"></i>
       </button>
     </div>
 
@@ -63,11 +63,21 @@
         >
           Redacted
         </button>
-        <button class="tabBtn" id="flushBtn" data-tooltip="Flush Output">
-          <i class="fa-solid fa-recycle"></i>
+        <button
+          class="tabBtn"
+          id="flushBtn"
+          data-tooltip="Flush Output"
+          aria-label="Flush output"
+        >
+          <i class="fa-solid fa-recycle" aria-hidden="true"></i>
         </button>
-        <button class="tabBtn" id="flushAllBtn" data-tooltip="Flush Everything">
-          <i class="fas fa-trash-can"></i>
+        <button
+          class="tabBtn"
+          id="flushAllBtn"
+          data-tooltip="Flush Everything"
+          aria-label="Flush everything"
+        >
+          <i class="fas fa-trash-can" aria-hidden="true"></i>
         </button>
       </div>
 
@@ -78,8 +88,8 @@
           placeholder="Dump your text here..."
         ></div>
         <div id="clipboardOut" contenteditable="false"></div>
-        <button class="tabBtn" id="copyBtn">
-          <i class="fa-solid fa-copy"></i>
+        <button class="tabBtn" id="copyBtn" aria-label="Copy redacted text">
+          <i class="fa-solid fa-copy" aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -120,7 +130,9 @@
 
     <!-- SIDE PANEL -->
     <aside class="side-panel">
-      <button class="close-btn" id="panelCloseBtn">×</button>
+      <button class="close-btn" id="panelCloseBtn" aria-label="Close panel">
+        ×
+      </button>
       <div class="panel-content">
         <h2 class="panel-title">Demo mode</h2>
         <div class="button-container">
@@ -172,7 +184,13 @@
         class="footer-github"
         aria-label="View source on GitHub"
       >
-        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+        <svg
+          viewBox="0 0 16 16"
+          width="16"
+          height="16"
+          fill="currentColor"
+          aria-hidden="true"
+        >
           <path
             d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
         0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
