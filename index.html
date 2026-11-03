@@ -34,7 +34,13 @@
     <h4>A Text Redaction Tool</h4>
     <!-- SIDE PANEL TOGGLE -->
     <div class="toggle-container left">
-      <button id="sidebar-btn" class="toggle-btn" aria-label="Settings Panel">
+      <button
+        id="sidebar-btn"
+        class="toggle-btn"
+        aria-label="Settings Panel"
+        aria-controls="sidePanel"
+        aria-expanded="false"
+      >
         <i class="fas fa-bars" aria-hidden="true"></i>
       </button>
     </div>
@@ -143,7 +149,14 @@
     <div class="panel-backdrop" id="panelBackdrop"></div>
 
     <!-- SIDE PANEL -->
-    <aside class="side-panel">
+    <aside
+      class="side-panel"
+      id="sidePanel"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Settings"
+      inert
+    >
       <button class="close-btn" id="panelCloseBtn" aria-label="Close panel">
         ×
       </button>
