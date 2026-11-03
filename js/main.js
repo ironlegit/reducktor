@@ -9,19 +9,26 @@ function flushInput() {
 
 // REDACTION FUNCTIONS
 
+const MAX_TEXT_BYTES = 500_000;
+
 // DOM Wrapper - Gets text and applies redaction function
 async function redactTxtDOM(redactFunc, replacement = "█████") {
   const inEl = document.getElementById("clipboardIn");
+  const outEl = document.getElementById("clipboardOut");
+  const source = outEl.innerText.trim() ? outEl : inEl;
+
+  const text = source.innerText;
+  if (new Blob([text]).size > MAX_TEXT_BYTES) {
+    alert(`Text exceeds the ${MAX_TEXT_BYTES / 1000} KB limit.`);
+    return;
+  }
 
   // Feels more natural
   if (inEl.innerText.trim() === "") {
     flushOutput();
   }
 
-  const outEl = document.getElementById("clipboardOut");
-
   // Apply redaction on output if non-empty
-  const source = outEl.innerText.trim() ? outEl : inEl;
   outEl.innerText = redactFunc(source.innerText, replacement);
   switchToOut();
 }
