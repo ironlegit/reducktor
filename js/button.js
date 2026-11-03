@@ -58,6 +58,15 @@ async function flushButtonAction() {
   setTimeout(() => (btn.innerHTML = '<i class="fas fa-recycle"></i>'), 1500);
 }
 
+async function flushAllButtonAction() {
+  const btn = document.getElementById("flushAllBtn");
+  btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+  flushOutput();
+  flushInput();
+  switchToIn();
+  setTimeout(() => (btn.innerHTML = '<i class="fas fa-recycle"></i>'), 1500);
+}
+
 // COPY-PASTE BUTTON
 async function copyClipboardContent() {
   const content = document.getElementById("clipboardOut").innerText;
@@ -127,6 +136,9 @@ document.getElementById("tabOut").addEventListener("click", switchToOut);
 document
   .getElementById("flushBtn")
   .addEventListener("click", flushButtonAction);
+document
+  .getElementById("flushAllBtn")
+  .addEventListener("click", flushAllButtonAction);
 document
   .getElementById("copyBtn")
   .addEventListener("click", copyClipboardContent);

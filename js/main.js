@@ -3,6 +3,10 @@ function flushOutput() {
   document.getElementById("clipboardOut").textContent = "";
 }
 
+function flushInput() {
+  document.getElementById("clipboardIn").textContent = "";
+}
+
 // REDACTION FUNCTIONS
 
 // DOM Wrapper - Gets text and applies redaction function
