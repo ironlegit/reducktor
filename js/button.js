@@ -1,15 +1,9 @@
 // TOGGLE DARK MODE FUNCTION
 function toggleDarkMode() {
-  // Trigger the CSS rules that change colors for dark mode
-  document.body.classList.toggle("dark-mode");
-
-  // Get the toggle button element
-  const button = document.querySelector("#darkmode-btn");
-
-  // Update button text based on current mode
-  button.innerHTML = document.body.classList.contains("dark-mode")
-    ? '<i class="fa-solid fa-sun"></i>'
-    : '<i class="fa-solid fa-moon"></i>';
+  const isDark = document.body.classList.toggle("dark-mode");
+  document
+    .getElementById("darkmode-btn")
+    .setAttribute("aria-pressed", String(isDark));
 }
 
 // TOGGLE SIDE PANEL

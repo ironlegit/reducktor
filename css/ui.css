@@ -200,6 +200,16 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+#darkmode-btn .icon-sun {
+  display: none;
+}
+body.dark-mode #darkmode-btn .icon-sun {
+  display: inline-block;
+}
+body.dark-mode #darkmode-btn .icon-moon {
+  display: none;
+}
+
 /* TOOLTIPS */
 [data-tooltip] {
   position: relative;
