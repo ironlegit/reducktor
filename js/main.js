@@ -55,7 +55,7 @@ async function redactPlaces() {
 // Comrpomise fails for international formats
 async function redactPhones() {
   const phoneRegex =
-    /(?<!\S)(?:\+?(\d{1,4}))?[-. (]*(\d{2,3})[-. )]*(\d{3})[-. ]*(\d{3,4})(?: *x(\d+))?/g;
+    /(?<!\S)(?:\+\d{1,4})?[-. (]{0,3}\d{2,3}[-. )]{0,3}\d{3}[-. ]{0,3}\d{3,4}(?: *x\d+)?(?!\d)/g;
   redactTxtDOM((txt) => replacePattern(txt, phoneRegex));
 }
 
