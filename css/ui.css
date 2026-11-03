@@ -200,6 +200,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+/* Flip dark mode icons */
 #darkmode-btn .icon-sun {
   display: none;
 }
@@ -207,6 +208,17 @@ body.dark-mode #darkmode-btn .icon-sun {
   display: inline-block;
 }
 body.dark-mode #darkmode-btn .icon-moon {
+  display: none;
+}
+
+/* flip flush and copy btn icons */
+.icon-done {
+  display: none;
+}
+.is-done .icon-done {
+  display: inline-block;
+}
+.is-done .icon-default {
   display: none;
 }
 

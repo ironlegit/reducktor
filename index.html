@@ -75,7 +75,8 @@
           data-tooltip="Flush Output"
           aria-label="Flush output"
         >
-          <i class="fa-solid fa-recycle" aria-hidden="true"></i>
+          <i class="fa-solid fa-recycle icon-default" aria-hidden="true"></i>
+          <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
         </button>
         <button
           class="tabBtn"
@@ -83,7 +84,8 @@
           data-tooltip="Flush Everything"
           aria-label="Flush everything"
         >
-          <i class="fas fa-trash-can" aria-hidden="true"></i>
+          <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
+          <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
         </button>
       </div>
 
@@ -94,8 +96,14 @@
           placeholder="Dump your text here..."
         ></div>
         <div id="clipboardOut" contenteditable="false"></div>
-        <button class="tabBtn" id="copyBtn" aria-label="Copy redacted text">
+        <button
+          class="tabBtn"
+          id="copyBtn"
+          data-tooltip="Copy redacted text"
+          aria-label="Copy redacted text"
+        >
           <i class="fa-solid fa-copy" aria-hidden="true"></i>
+          <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
         </button>
       </div>
     </div>
