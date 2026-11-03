@@ -55,7 +55,7 @@ async function flushButtonAction() {
   btn.innerHTML = '<i class="fa-solid fa-check"></i>';
   flushOutput();
   switchToIn();
-  setTimeout(() => (btn.innerHTML = '<i class="fas fa-trash-can"></i>'), 1500);
+  setTimeout(() => (btn.innerHTML = '<i class="fas fa-recycle"></i>'), 1500);
 }
 
 // COPY-PASTE BUTTON
