@@ -6,8 +6,8 @@ Generated from package-lock.json via `npm ci` (integrity-verified).
 - file: vendor/compromise.js ← node_modules/compromise/builds/compromise.js
 - sha256: 33d1d343d13b82b27c29ef0d2208876ae94bcd888667fdfa51433847b0161b41
 
-## compromise-dates v3.9.0
+## compromise-dates v3.10.0
 - file: vendor/compromise-dates.min.js ← node_modules/compromise-dates/builds/compromise-dates.min.js
-- sha256: c1b8ff15a0a8135f52c8665dce75c6f299afce90e5d72bd397a566a59ae40d3d
+- sha256: 5fa29cb4f372772a6b24302a3475e66ce2cdd8690a8944fa6687e4946e566779
 
 Version history: git log of this file.
