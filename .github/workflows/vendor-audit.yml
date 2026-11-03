@@ -28,7 +28,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Reinstall from lockfile, regenerate vendor/, grep for exfil sinks
         run: bash scripts/vendor-audit.sh
