@@ -26,9 +26,21 @@
   </head>
   <body>
     <!-- Mobile Block -->
-    <div class="mobile-block">
-      🦆🦆🦆🦆🦆🦆<br />⚠️ This page isn't supported on mobile yet. Please visit
-      on a desktop browser.
+    <div
+      class="mobile-block"
+      id="mobileBlock"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile device notice"
+    >
+      <span aria-hidden="true">🦆🦆🦆🦆🦆🦆</span>
+      <p>
+        ⚠️ This page isn't optimized for mobile yet.. It works, but it's tiny.
+        Visit on a desktop browser for the full experience.
+      </p>
+      <button id="mobileDismissBtn" class="mobile-dismiss-btn">
+        Continue anyway
+      </button>
     </div>
     <div class="svg-container">
       <img src="assets/reducktor.svg" alt="" aria-hidden="true" />

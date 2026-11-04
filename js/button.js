@@ -187,3 +187,9 @@ document
 document
   .getElementById("placeholderMode")
   .addEventListener("change", toggleRedactionPlaceholder);
+
+// Mobile Popup
+document.getElementById("mobileDismissBtn").addEventListener("click", () => {
+  document.body.classList.add("mobile-dismissed");
+  document.getElementById("clipboardIn").focus();
+});
