@@ -7,8 +7,8 @@ set -euo pipefail
 VENDOR_DIR="vendor"
 SINKS=('fetch(' 'XMLHttpRequest' 'sendBeacon' 'WebSocket' 'import(')
 
-echo "==> npm ci (install exactly what package-lock.json pins)"
-npm ci
+echo "==> npm ci (install exactly what package-lock.json pins, no lifecycle scripts)"
+npm ci --ignore-scripts
 
 echo "==> Regenerating ${VENDOR_DIR}/ from node_modules"
 mkdir -p "${VENDOR_DIR}"
