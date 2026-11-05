@@ -28,7 +28,7 @@ for sink in "${SINKS[@]}"; do
   fi
 done
 
-if [ "${fail}" -ne 0 ]; then
+if [[ "${fail}" -ne 0 ]]; then
   echo "==> AUDIT FAILED: vendor builds contain network sinks."
   exit 1
 fi
