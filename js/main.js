@@ -35,8 +35,18 @@ async function redactTxtDOM(redactFunc, replacement = "█████") {
 
 // Custom entity level function
 // NOTE: To debug Compromise tokens use console.log(JSON.stringify(nlp(txt).places().json(), null, 2));
-async function redactOrgs() {
-  redactTxtDOM((txt) => {
+
+async function runRedactor(transform) {
+  try {
+    await redactTxtDOM(transform);
+  } catch (err) {
+    // clipboard read can reject (permission denied, tab unfocused)
+    console.error("redaction failed:", err && err.name, err && err.message);
+  }
+}
+
+function redactOrgs() {
+  void runRedactor((txt) => {
     return nlp(txt)
       .organizations()
       .replaceWith(getPlaceholder("org"))
@@ -45,29 +55,29 @@ async function redactOrgs() {
   });
 }
 
-async function redactNames() {
-  redactTxtDOM((txt) => {
+function redactNames() {
+  void runRedactor((txt) => {
     return nlp(txt).people().replaceWith(getPlaceholder("name")).all().text();
   });
 }
 
-async function redactEmails() {
-  redactTxtDOM((txt) => {
+function redactEmails() {
+  void runRedactor((txt) => {
     return nlp(txt).emails().replaceWith(getPlaceholder("email")).all().text();
   });
 }
 
-async function redactPlaces() {
-  redactTxtDOM((txt) => {
+function redactPlaces() {
+  void runRedactor((txt) => {
     return nlp(txt).places().replaceWith(getPlaceholder("place")).all().text();
   });
 }
 
 // Comrpomise fails for international formats
-async function redactPhones() {
+function redactPhones() {
   const phoneRegex =
     /(?<!\S)(?:\+\d{1,4})?[-. (]{0,3}\d{2,3}[-. )]{0,3}\d{3}[-. ]{0,3}\d{3,4}(?: *x\d+)?(?!\d)/g;
-  redactTxtDOM((txt) => replacePattern(txt, phoneRegex));
+  void runRedactor((txt) => replacePattern(txt, phoneRegex));
 }
 
 // Strategy: Regex-based patterns for phone numbers
@@ -80,7 +90,7 @@ function replacePattern(txt, regex, replacement = "█████") {
 nlp.plugin(compromiseDates);
 // TODO: Exclude weekdays option?
 async function redactDates() {
-  redactTxtDOM((txt) => {
+  void runRedactor((txt) => {
     // Avoid redacting prepositions and weekedays and the like
     const exclusionList = ["Preposition", "Determiner", "Ordinal", "Noun"];
     const dates = nlp(txt).dates().json();
