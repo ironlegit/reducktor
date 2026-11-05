@@ -267,20 +267,20 @@ async function redactText(reversed = false) {
 
 // Demo mode
 
-const DEMO_TEXT = `My name is Peter from Sweden and I am getting this error message:
+const DEMO_TEXT = `My name is Doug Rattmann from Sweden and I am getting this error message:
 [2026-10-15 14:32:45] INFO: Initializing payment service
 [2026-10-15 14:32:46] DEBUG: Connecting to CryptoScam API with key: cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW
 [2026-10-15 14:32:47] INFO: Authentication successful
 [2026-10-15 14:32:48] ERROR: Failed to process payment. Response: {"error": "Invalid card", "api_key_used": "cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW"}
 
 
-My username is peter@umbrella-corp.com by the way.
+My username is doug@umbrella-corp.com by the way.
 
 I work for Umbrella Corp. You can contact me on +1 (333) 444 1234.
 `;
 
 const DEMO_PATTERNS =
-  "Peter /%/ Reuben" +
+  "Doug Rattmann /%/ John Doe" +
   "\n" +
   "cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW";
 
