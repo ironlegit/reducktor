@@ -35,8 +35,18 @@ async function redactTxtDOM(redactFunc, replacement = "█████") {
 
 // Custom entity level function
 // NOTE: To debug Compromise tokens use console.log(JSON.stringify(nlp(txt).places().json(), null, 2));
-async function redactOrgs() {
-  redactTxtDOM((txt) => {
+
+async function runRedactor(transform) {
+  try {
+    await redactTxtDOM(transform);
+  } catch (err) {
+    // clipboard read can reject (permission denied, tab unfocused)
+    console.error("redaction failed");
+  }
+}
+
+function redactOrgs() {
+  void runRedactor((txt) => {
     return nlp(txt)
       .organizations()
       .replaceWith(getPlaceholder("org"))
@@ -45,29 +55,29 @@ async function redactOrgs() {
   });
 }
 
-async function redactNames() {
-  redactTxtDOM((txt) => {
+function redactNames() {
+  void runRedactor((txt) => {
     return nlp(txt).people().replaceWith(getPlaceholder("name")).all().text();
   });
 }
 
-async function redactEmails() {
-  redactTxtDOM((txt) => {
+function redactEmails() {
+  void runRedactor((txt) => {
     return nlp(txt).emails().replaceWith(getPlaceholder("email")).all().text();
   });
 }
 
-async function redactPlaces() {
-  redactTxtDOM((txt) => {
+function redactPlaces() {
+  void runRedactor((txt) => {
     return nlp(txt).places().replaceWith(getPlaceholder("place")).all().text();
   });
 }
 
 // Comrpomise fails for international formats
-async function redactPhones() {
+function redactPhones() {
   const phoneRegex =
     /(?<!\S)(?:\+\d{1,4})?[-. (]{0,3}\d{2,3}[-. )]{0,3}\d{3}[-. ]{0,3}\d{3,4}(?: *x\d+)?(?!\d)/g;
-  redactTxtDOM((txt) => replacePattern(txt, phoneRegex));
+  void runRedactor((txt) => replacePattern(txt, phoneRegex));
 }
 
 // Strategy: Regex-based patterns for phone numbers
@@ -80,7 +90,7 @@ function replacePattern(txt, regex, replacement = "█████") {
 nlp.plugin(compromiseDates);
 // TODO: Exclude weekdays option?
 async function redactDates() {
-  redactTxtDOM((txt) => {
+  void runRedactor((txt) => {
     // Avoid redacting prepositions and weekedays and the like
     const exclusionList = ["Preposition", "Determiner", "Ordinal", "Noun"];
     const dates = nlp(txt).dates().json();
@@ -237,7 +247,7 @@ function applyPatterns(txt, patternMap, defaultReplacement) {
   );
 }
 
-function redactText(reversed = false) {
+async function redactText(reversed = false) {
   const el = document.getElementById("redactPatterns");
   const patterns = buildPatternMap(el.innerText.split("\n"), reversed);
 
@@ -246,7 +256,7 @@ function redactText(reversed = false) {
       alert("Please enter patterns to redact.");
       return;
     }
-    redactTxtDOM((txt) =>
+    await redactTxtDOM((txt) =>
       applyPatterns(txt, patterns, getPlaceholder("custom")),
     );
   } finally {
@@ -257,20 +267,22 @@ function redactText(reversed = false) {
 
 // Demo mode
 
-const DEMO_TEXT = `My name is Peter from Sweden and I am getting this error message:
+const DEMO_TEXT = `My name is Doug Rattmann from Sweden and I am getting this error message:
 [2026-10-15 14:32:45] INFO: Initializing payment service
-[2026-10-15 14:32:46] DEBUG: Connecting to CashMoney API with key: cm_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW
+[2026-10-15 14:32:46] DEBUG: Connecting to CryptoScam API with key: cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW
 [2026-10-15 14:32:47] INFO: Authentication successful
-[2026-10-15 14:32:48] ERROR: Failed to process payment. Response: {"error": "Invalid card", "api_key_used": "cm_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW"}
+[2026-10-15 14:32:48] ERROR: Failed to process payment. Response: {"error": "Invalid card", "api_key_used": "cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW"}
 
 
-My username is peter@cashmoney.com by the way.
+My username is doug@umbrella-corp.com by the way.
+
+I work for Umbrella Corp. You can contact me on +1 (333) 444 1234.
 `;
 
 const DEMO_PATTERNS =
-  "Peter /%/ Reuben" +
+  "Doug Rattmann /%/ John Doe" +
   "\n" +
-  "cm_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW";
+  "cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW";
 
 document.getElementById("demoBtn").addEventListener("click", () => {
   document.getElementById("clipboardIn").innerText = DEMO_TEXT;
