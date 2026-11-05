@@ -237,7 +237,7 @@ function applyPatterns(txt, patternMap, defaultReplacement) {
   );
 }
 
-function redactText(reversed = false) {
+async function redactText(reversed = false) {
   const el = document.getElementById("redactPatterns");
   const patterns = buildPatternMap(el.innerText.split("\n"), reversed);
 
@@ -246,7 +246,7 @@ function redactText(reversed = false) {
       alert("Please enter patterns to redact.");
       return;
     }
-    redactTxtDOM((txt) =>
+    await redactTxtDOM((txt) =>
       applyPatterns(txt, patterns, getPlaceholder("custom")),
     );
   } finally {

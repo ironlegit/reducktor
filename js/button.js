@@ -133,7 +133,10 @@ let reversed = false;
 const reverseBtn = document.getElementById("reverseBtn");
 
 document.getElementById("redactBtn").addEventListener("click", () => {
-  redactText(reversed);
+  redactText(reversed).catch((err) => {
+    // Reaching the clipboard can fail due to permission denied, tab unfocused
+    console.error("redaction failed:", err && err.name, err && err.message);
+  });
 });
 
 reverseBtn.addEventListener("click", () => {
