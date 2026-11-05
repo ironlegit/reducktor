@@ -200,6 +200,28 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+/* Flip dark mode icons */
+#darkmode-btn .icon-sun {
+  display: none;
+}
+body.dark-mode #darkmode-btn .icon-sun {
+  display: inline-block;
+}
+body.dark-mode #darkmode-btn .icon-moon {
+  display: none;
+}
+
+/* flip flush and copy btn icons */
+.icon-done {
+  display: none;
+}
+.is-done .icon-done {
+  display: inline-block;
+}
+.is-done .icon-default {
+  display: none;
+}
+
 /* TOOLTIPS */
 [data-tooltip] {
   position: relative;
@@ -402,6 +424,7 @@ body.dark-mode .redact-btn {
 }
 
 /* MOBILE FIX */
+
 @media (max-width: 768px) {
   .mobile-block {
     display: flex;
@@ -417,8 +440,25 @@ body.dark-mode .redact-btn {
     color: #f0f0f0;
   }
 
-  /* Hide everything else */
-  body > *:not(.mobile-block) {
+  /* Hide everything else until the user dismisses */
+  body:not(.mobile-dismissed) > *:not(.mobile-block) {
     display: none !important;
   }
+
+  /* Dismissed: hide the notice, everything else becomes visible again */
+  body.mobile-dismissed .mobile-block {
+    display: none;
+  }
+}
+
+.mobile-dismiss-btn {
+  margin-top: 1.5rem;
+  padding: 12px 24px;
+  min-height: 44px;
+  border: none;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #121212;
+  font-size: 14px;
+  cursor: pointer;
 }

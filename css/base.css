@@ -30,14 +30,14 @@ body.dark-mode {
 .svg-container {
   display: flex;
   justify-content: center; /* Horizontal centering */
-  align-items: center;     /* Vertical centering  */
-  width: 100%;             /* Full width of parent */
+  align-items: center; /* Vertical centering  */
+  width: 100%; /* Full width of parent */
 }
 
 .svg-container img {
-  width: 400px;           /* Set your desired width */
-  height: auto;           /* Maintain aspect ratio */
-  max-width: 100%;        /* Prevent overflow */
+  width: 400px; /* Set your desired width */
+  height: auto; /* Maintain aspect ratio */
+  max-width: 100%; /* Prevent overflow */
 }
 
 h4 {

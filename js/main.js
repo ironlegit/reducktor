@@ -3,21 +3,32 @@ function flushOutput() {
   document.getElementById("clipboardOut").textContent = "";
 }
 
+function flushInput() {
+  document.getElementById("clipboardIn").textContent = "";
+}
+
 // REDACTION FUNCTIONS
+
+const MAX_TEXT_BYTES = 500_000;
 
 // DOM Wrapper - Gets text and applies redaction function
 async function redactTxtDOM(redactFunc, replacement = "█████") {
   const inEl = document.getElementById("clipboardIn");
+  const outEl = document.getElementById("clipboardOut");
+  const source = outEl.innerText.trim() ? outEl : inEl;
+
+  const text = source.innerText;
+  if (new Blob([text]).size > MAX_TEXT_BYTES) {
+    alert(`Text exceeds the ${MAX_TEXT_BYTES / 1000} KB limit.`);
+    return;
+  }
 
   // Feels more natural
   if (inEl.innerText.trim() === "") {
     flushOutput();
   }
 
-  const outEl = document.getElementById("clipboardOut");
-
   // Apply redaction on output if non-empty
-  const source = outEl.innerText.trim() ? outEl : inEl;
   outEl.innerText = redactFunc(source.innerText, replacement);
   switchToOut();
 }
@@ -55,7 +66,7 @@ async function redactPlaces() {
 // Comrpomise fails for international formats
 async function redactPhones() {
   const phoneRegex =
-    /(?<!\S)(?:\+?(\d{1,4}))?[-. (]*(\d{2,3})[-. )]*(\d{3})[-. ]*(\d{3,4})(?: *x(\d+))?/g;
+    /(?<!\S)(?:\+\d{1,4})?[-. (]{0,3}\d{2,3}[-. )]{0,3}\d{3}[-. ]{0,3}\d{3,4}(?: *x\d+)?(?!\d)/g;
   redactTxtDOM((txt) => replacePattern(txt, phoneRegex));
 }
 
@@ -165,11 +176,6 @@ function parsePatternLines(rawLines) {
 
 // Build map of all the plain and paired patterns
 // Cave: Paired patterns take precendence over plain ones!
-// Example:
-// Peter /%/ Reuben
-// Peter
-//
-// The plain pattern is ignored, Peter is replaced by Reuben.
 function buildPatternMap(rawLines, reversed) {
   const { pairs, plain } = parsePatternLines(rawLines);
   const map = new Map();
@@ -205,10 +211,14 @@ function buildRedactionRegex(targets) {
     .join("|");
 
   // Note: Unicode-aware boundaries also matches "Peter!" or "#Peter", but not "1Peter" or "aPeter"
-  return new RegExp(
-    `(?<![\\p{L}\\p{N}_])(?:${alternation})(?![\\p{L}\\p{N}_])`,
-    "gu",
-  );
+  try {
+    return new RegExp(
+      `(?<![\\p{L}\\p{N}_])(?:${alternation})(?![\\p{L}\\p{N}_])`,
+      "gu",
+    );
+  } catch {
+    return null;
+  }
 }
 
 function applyPatterns(txt, patternMap, defaultReplacement) {

@@ -1,36 +1,55 @@
 // TOGGLE DARK MODE FUNCTION
 function toggleDarkMode() {
-  // Trigger the CSS rules that change colors for dark mode
-  document.body.classList.toggle("dark-mode");
-
-  // Get the toggle button element
-  const button = document.querySelector("#darkmode-btn");
-
-  // Update button text based on current mode
-  button.innerHTML = document.body.classList.contains("dark-mode")
-    ? '<i class="fa-solid fa-sun"></i>'
-    : '<i class="fa-solid fa-moon"></i>';
+  const isDark = document.body.classList.toggle("dark-mode");
+  document
+    .getElementById("darkmode-btn")
+    .setAttribute("aria-pressed", String(isDark));
 }
 
 // TOGGLE SIDE PANEL
 function togglePanel() {
   const panel = document.querySelector(".side-panel");
   const backdrop = document.querySelector(".panel-backdrop");
+  const sidebarBtn = document.getElementById("sidebar-btn");
   const isOpening = !panel.classList.contains("active");
 
   panel.classList.toggle("active");
   backdrop.classList.toggle("active");
+  panel.inert = !isOpening;
+  sidebarBtn.setAttribute("aria-expanded", String(isOpening));
 
   if (isOpening) {
     panel.querySelector(".close-btn").focus();
-    document.addEventListener("keydown", closeOnEscape);
+    document.addEventListener("keydown", onPanelKeydown);
   } else {
-    document.removeEventListener("keydown", closeOnEscape);
+    document.removeEventListener("keydown", onPanelKeydown);
+    sidebarBtn.focus();
   }
 }
 
-function closeOnEscape(e) {
-  if (e.key === "Escape") togglePanel();
+function onPanelKeydown(e) {
+  if (e.key === "Escape") {
+    togglePanel();
+    return;
+  }
+  if (e.key !== "Tab") return;
+
+  const panel = document.querySelector(".side-panel");
+  const focusables = [
+    ...panel.querySelectorAll("button, input, [href], [tabindex]"),
+  ];
+  if (focusables.length === 0) return;
+
+  e.preventDefault();
+  const idx = focusables.indexOf(document.activeElement);
+  let next;
+
+  if (e.shiftKey) {
+    next = idx <= 0 ? focusables.length - 1 : idx - 1;
+  } else {
+    next = idx === focusables.length - 1 || idx === -1 ? 0 : idx + 1;
+  }
+  focusables[next].focus();
 }
 
 // CLIPBOARD TOGGLE IN / OUT
@@ -49,25 +68,35 @@ function switchToIn() {
 }
 
 // Flush button
+function showFeedback(btn) {
+  btn.classList.add("is-done");
+  setTimeout(() => btn.classList.remove("is-done"), 1000);
+}
+
 // TODO: Make a little animation so that its clear something happened!
 async function flushButtonAction() {
   const btn = document.getElementById("flushBtn");
-  btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+  showFeedback(btn);
   flushOutput();
   switchToIn();
-  setTimeout(() => (btn.innerHTML = '<i class="fas fa-trash-can"></i>'), 1500);
+}
+
+async function flushAllButtonAction() {
+  const btn = document.getElementById("flushAllBtn");
+  showFeedback(btn);
+  flushOutput();
+  flushInput();
+  switchToIn();
 }
 
 // COPY-PASTE BUTTON
 async function copyClipboardContent() {
   const content = document.getElementById("clipboardOut").innerText;
-
   await navigator.clipboard.writeText(content);
 
   // Visual feedback
   const btn = document.getElementById("copyBtn");
-  btn.innerHTML = '<i class="fa-solid fa-check"></i>';
-  setTimeout(() => (btn.innerHTML = '<i class="fa-solid fa-copy"></i>'), 1500);
+  showFeedback(btn);
 }
 
 // REDACTION PLACEHOLDER TOGGLE LOGIC
@@ -128,6 +157,9 @@ document
   .getElementById("flushBtn")
   .addEventListener("click", flushButtonAction);
 document
+  .getElementById("flushAllBtn")
+  .addEventListener("click", flushAllButtonAction);
+document
   .getElementById("copyBtn")
   .addEventListener("click", copyClipboardContent);
 
@@ -155,3 +187,9 @@ document
 document
   .getElementById("placeholderMode")
   .addEventListener("change", toggleRedactionPlaceholder);
+
+// Mobile Popup
+document.getElementById("mobileDismissBtn").addEventListener("click", () => {
+  document.body.classList.add("mobile-dismissed");
+  document.getElementById("clipboardIn").focus();
+});
