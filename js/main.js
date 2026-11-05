@@ -41,7 +41,7 @@ async function runRedactor(transform) {
     await redactTxtDOM(transform);
   } catch (err) {
     // clipboard read can reject (permission denied, tab unfocused)
-    console.error("redaction failed:", err && err.name, err && err.message);
+    console.error("redaction failed");
   }
 }
 
