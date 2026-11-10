@@ -82,7 +82,6 @@
   flex: 1 1 auto; /* fills the pane below the pane label */
   min-height: 0;
   width: 100%;
-  overflow: hidden;
   border-radius: 8px;
   padding: 8px;
   background-color: var(--clipboard-bg-out);
