@@ -35,8 +35,8 @@
     >
       <span aria-hidden="true">🦆🦆🦆🦆🦆🦆</span>
       <p>
-        ⚠️ This page isn't optimized for mobile yet.. It works, but it's tiny.
-        Visit on a desktop browser for the full experience.
+        ⚠️ This page isn't optimized for mobile yet... Visit on a desktop
+        browser for the full experience.
       </p>
       <button id="mobileDismissBtn" class="mobile-dismiss-btn">
         Continue anyway
@@ -72,92 +72,125 @@
       </button>
     </div>
 
-    <!-- MAIN CONTENT CONTAINER -->
-    <div class="clipboard-wrapper">
-      <div class="tab-switcher">
-        <button
-          class="tabBtn active"
-          id="tabIn"
-          data-tooltip="View the original text"
-        >
-          Original
-        </button>
-        <button
-          class="tabBtn"
-          id="tabOut"
-          data-tooltip="View the redacted version"
-        >
-          Redacted
-        </button>
-        <button
-          class="tabBtn"
-          id="flushBtn"
-          data-tooltip="Flush Output"
-          aria-label="Flush output"
-        >
-          <i class="fa-solid fa-recycle icon-default" aria-hidden="true"></i>
-          <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
-        </button>
-        <button
-          class="tabBtn"
-          id="flushAllBtn"
-          data-tooltip="Flush Everything"
-          aria-label="Flush everything"
-        >
-          <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
-          <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
-        </button>
-      </div>
-
-      <div class="clipboard-panel">
+    <!-- THREE-PANE WORKSPACE -->
+    <main class="app-layout">
+      <!-- LEFT PANE: custom redaction patterns -->
+      <section class="pane pane-patterns" aria-labelledby="patternsHeading">
+        <p class="pane-label" id="patternsHeading">Custom patterns</p>
         <div
-          id="clipboardIn"
+          id="redactPatterns"
           contenteditable="true"
-          placeholder="Dump your text here..."
+          placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
         ></div>
-        <div id="clipboardOut" contenteditable="false"></div>
+      </section>
+
+      <!-- MIDDLE PANE: thematic NLP redactors, stacked vertically -->
+      <section class="pane pane-actions" aria-labelledby="nlpHeading">
+        <p class="pane-label" id="nlpHeading">Redactors</p>
+        <button class="redact-btn" id="redact-orgs-btn">Orgs</button>
+        <button class="redact-btn" id="redact-names-btn">Names</button>
+        <button class="redact-btn" id="redact-dates-btn">Dates</button>
+        <button class="redact-btn" id="redact-phones-btn">Phones</button>
+        <button class="redact-btn" id="redact-emails-btn">Emails</button>
+        <button class="redact-btn" id="redact-places-btn">Places</button>
+        <hr class="pane-divider" aria-hidden="true" />
+        <button class="redact-btn" id="redactBtn">Redact Custom Text</button>
         <button
-          class="tabBtn"
-          id="copyBtn"
-          data-tooltip="Copy redacted text"
-          aria-label="Copy redacted text"
+          class="redact-btn"
+          id="reverseBtn"
+          aria-pressed="false"
+          data-tooltip="Reverses the order of the redaction pattern."
         >
-          <i class="fa-solid fa-copy" aria-hidden="true"></i>
-          <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
+          Reverse: off
         </button>
-      </div>
-    </div>
+      </section>
 
-    <!-- BUTTON CONTAINER PRESET -->
-    <div class="button-container-exp">
-      <span class="experimental-label">THEMATIC NLP REDACTORS </span>
-      <button class="redact-btn" id="redact-orgs-btn">Orgs</button>
-      <button class="redact-btn" id="redact-names-btn">Names</button>
-      <button class="redact-btn" id="redact-dates-btn">Dates</button>
-      <button class="redact-btn" id="redact-phones-btn">Phones</button>
-      <button class="redact-btn" id="redact-emails-btn">Emails</button>
-      <button class="redact-btn" id="redact-places-btn">Places</button>
-    </div>
+      <!-- RIGHT PANE: main workspace -->
+      <section class="pane pane-main" aria-labelledby="workspaceHeading">
+        <p class="pane-label" id="workspaceHeading">Workspace</p>
+        <div class="clipboard-wrapper">
+          <div class="tab-bar">
+            <div
+              class="tab-switcher"
+              role="tablist"
+              aria-label="Clipboard views"
+            >
+              <button
+                class="tabBtn active"
+                id="tabIn"
+                role="tab"
+                aria-selected="true"
+                aria-controls="clipboardIn"
+                data-tooltip="View the original text"
+              >
+                Original
+              </button>
+              <button
+                class="tabBtn"
+                id="tabOut"
+                role="tab"
+                aria-selected="false"
+                aria-controls="clipboardOut"
+                tabindex="-1"
+                data-tooltip="View the redacted version"
+              >
+                Redacted
+              </button>
+            </div>
+            <!-- Flush buttons are actions, not tabs: they live outside the tablist -->
+            <div class="tab-actions">
+              <button
+                class="tabBtn"
+                id="flushBtn"
+                data-tooltip="Flush Output"
+                aria-label="Flush output"
+              >
+                <i
+                  class="fa-solid fa-recycle icon-default"
+                  aria-hidden="true"
+                ></i>
+                <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
+              </button>
+              <button
+                class="tabBtn"
+                id="flushAllBtn"
+                data-tooltip="Flush Everything"
+                aria-label="Flush everything"
+              >
+                <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
+                <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
 
-    <!-- REDACTION PATTERNS TEXT AREA -->
-    <div
-      id="redactPatterns"
-      contenteditable="true"
-      placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
-    ></div>
-
-    <!-- BUTTON CONTAINER CUSTOM -->
-    <div class="button-container">
-      <button class="redact-btn" id="redactBtn">Redact Custom Text</button>
-      <button
-        class="redact-btn"
-        id="reverseBtn"
-        aria-pressed="false"
-        data-tooltip="Reverses the order of the redaction pattern."
-      >
-        Reverse: off
-      </button>
-    </div>
+          <div class="clipboard-panel">
+            <div
+              id="clipboardIn"
+              role="tabpanel"
+              aria-labelledby="tabIn"
+              contenteditable="true"
+              placeholder="Dump your text here..."
+            ></div>
+            <div
+              id="clipboardOut"
+              role="tabpanel"
+              aria-labelledby="tabOut"
+              contenteditable="false"
+              hidden
+            ></div>
+            <button
+              class="tabBtn"
+              id="copyBtn"
+              data-tooltip="Copy redacted text"
+              aria-label="Copy redacted text"
+            >
+              <i class="fa-solid fa-copy" aria-hidden="true"></i>
+              <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <!-- Backdrop -->
     <div class="panel-backdrop" id="panelBackdrop"></div>
