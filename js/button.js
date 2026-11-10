@@ -52,49 +52,6 @@ function onPanelKeydown(e) {
   focusables[next].focus();
 }
 
-// CLIPBOARD TOGGLE IN / OUT
-// Real tab semantics (WAI-ARIA tabs pattern):
-// - aria-selected + .active class stay in sync
-// - roving tabindex: only the selected tab is tabbable
-// - the [hidden] attribute is the single source of truth for pane visibility
-//   (see the [hidden] rule in ui.css)
-const tabIn = document.getElementById("tabIn");
-const tabOut = document.getElementById("tabOut");
-const clipboardIn = document.getElementById("clipboardIn");
-const clipboardOut = document.getElementById("clipboardOut");
-
-function setTab(activeTab) {
-  const tabs = [tabIn, tabOut];
-  const panes = [clipboardIn, clipboardOut];
-
-  tabs.forEach((tab, i) => {
-    const selected = tab === activeTab;
-    tab.classList.toggle("active", selected);
-    tab.setAttribute("aria-selected", String(selected));
-    tab.tabIndex = selected ? 0 : -1; // roving tabindex for arrow-key nav
-    panes[i].hidden = !selected;
-  });
-
-  activeTab.focus();
-}
-
-// Kept as thin wrappers so main.js (and the event wiring below) keeps working
-function switchToOut() {
-  setTab(tabOut);
-}
-
-function switchToIn() {
-  setTab(tabIn);
-}
-
-// Arrow-key navigation between tabs (standard tablist keyboard pattern)
-tabIn.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") setTab(tabOut);
-});
-tabOut.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") setTab(tabIn);
-});
-
 // Flush button
 function showFeedback(btn) {
   btn.classList.add("is-done");
@@ -106,7 +63,6 @@ async function flushButtonAction() {
   const btn = document.getElementById("flushBtn");
   showFeedback(btn);
   flushOutput();
-  switchToIn();
 }
 
 async function flushAllButtonAction() {
@@ -114,7 +70,6 @@ async function flushAllButtonAction() {
   showFeedback(btn);
   flushOutput();
   flushInput();
-  switchToIn();
 }
 
 // COPY-PASTE BUTTON
@@ -182,8 +137,6 @@ document.getElementById("panelCloseBtn").addEventListener("click", togglePanel);
 document
   .getElementById("darkmode-btn")
   .addEventListener("click", toggleDarkMode);
-document.getElementById("tabIn").addEventListener("click", switchToIn);
-document.getElementById("tabOut").addEventListener("click", switchToOut);
 document
   .getElementById("flushBtn")
   .addEventListener("click", flushButtonAction);
