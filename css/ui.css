@@ -7,7 +7,7 @@
      3. Buttons (toggle + redact) and dark-mode variants
      4. Tooltips
      5. Side panel
-     6. Accessibility helpers ([hidden], focus rings)
+     6. Accessibility helpers (focus rings)
      7. Responsive fallbacks (narrow windows, mobile block)
    ============================================================ */
 
@@ -22,7 +22,7 @@
   flex: 1 1 auto; /* fills the body column between header and footer */
   min-height: 0; /* lets children shrink instead of overflowing body */
   width: 100%;
-  margin: 24px; /* split left and right space evenly > centering */
+  margin: 24px 0 0; /* top margin, but no side margins */
 }
 
 .pane {
@@ -104,7 +104,7 @@
   font-size: 10px;
   color: var(--theme-color);
   cursor: pointer;
-  background-color: var(--clipboard-bg-out); /* inactive = darker */
+  background-color: var(--clipboard-bg-out);
   position: relative;
 }
 
@@ -141,6 +141,7 @@
 
 /* Placeholder text in empty contenteditable fields */
 #clipboardIn:empty::before,
+#clipboardOut:empty::before,
 #redactPatterns:empty::before {
   content: attr(placeholder);
   color: #666;
