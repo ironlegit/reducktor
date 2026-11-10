@@ -37,6 +37,7 @@ body {
 body.dark-mode {
   --theme-color: var(--theme-color-dark);
   --clipboard-bg: var(--clipboard-bg-dark);
+  --clipboard-bg-readonly: rgba(30, 30, 40, 0.4);
   --clipboard-bg-out: var(--clipboard-bg-dark-out);
   --shadow-color: rgba(0, 0, 0, 0.3);
   --border-color: #444;

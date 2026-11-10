@@ -12,6 +12,7 @@
     247,
     0.2
   ); /* Semi-transparent clipboard background for light mode */
+  --clipboard-bg-readonly: rgba(242, 250, 247, 0.2);
   --clipboard-bg-out: rgba(
     242,
     250,
