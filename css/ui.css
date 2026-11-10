@@ -47,15 +47,15 @@
 /* --- Pane width ratios --- */
 
 .pane-patterns {
-  flex: 2 1 0;
+  flex: 4 1 0;
 }
 
 .pane-actions {
-  flex: 1 1 0;
+  flex: 3 1 0;
 }
 
 .pane-main {
-  flex: 2 1 0;
+  flex: 4 1 0;
 }
 
 .pane-actions .redact-btn {
