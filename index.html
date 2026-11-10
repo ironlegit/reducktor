@@ -75,6 +75,28 @@
     <!-- THREE-PANE WORKSPACE -->
     <main class="app-layout">
       <!-- LEFT PANE: custom redaction patterns -->
+      <section class="pane pane-patterns" aria-labelledby="inputHeading">
+        <p class="pane-label" id="inputHeading">Original</p>
+
+        <div class="clipboard-wrapper">
+          <div class="clipboard-actions">
+            <button
+              class="clipboardBtn"
+              id="flushAllBtn"
+              data-tooltip="Flush Everything"
+              aria-label="Flush everything"
+            >
+              <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
+              <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div
+            id="clipboardIn"
+            contenteditable="true"
+            placeholder="Dump your text here..."
+          ></div>
+        </div>
+      </section>
 
       <!-- MIDDLE PANE: thematic NLP redactors, stacked vertically -->
       <section class="pane pane-actions" aria-labelledby="nlpHeading">
@@ -91,16 +113,14 @@
 
         <hr class="pane-divider" aria-hidden="true" />
 
-        <section class="pane pane-patterns" aria-labelledby="patternsHeading">
-          <p class="pane-label" id="patternsHeading">Custom patterns</p>
-          <div
-            id="redactPatterns"
-            contenteditable="true"
-            placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
-          ></div>
-        </section>
+        <p class="pane-label" id="patternsHeading">Custom patterns</p>
+        <div
+          id="redactPatterns"
+          contenteditable="true"
+          placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
+        ></div>
 
-        <div class="btn-grid" role="group" aria-label="Entity redactionj">
+        <div class="btn-grid" role="group" aria-label="Custom redaction">
           <button class="redact-btn" id="redactBtn">Redact Custom Text</button>
           <button
             class="redact-btn"
@@ -112,82 +132,13 @@
           </button>
         </div>
       </section>
-
       <!-- RIGHT PANE: main workspace -->
       <section class="pane pane-main" aria-labelledby="workspaceHeading">
-        <p class="pane-label" id="workspaceHeading">Workspace</p>
+        <p class="pane-label" id="workspaceHeading">Redacted</p>
         <div class="clipboard-wrapper">
-          <div class="tab-bar">
-            <div
-              class="tab-switcher"
-              role="tablist"
-              aria-label="Clipboard views"
-            >
-              <button
-                class="tabBtn active"
-                id="tabIn"
-                role="tab"
-                aria-selected="true"
-                aria-controls="clipboardIn"
-                data-tooltip="View the original text"
-              >
-                Original
-              </button>
-              <button
-                class="tabBtn"
-                id="tabOut"
-                role="tab"
-                aria-selected="false"
-                aria-controls="clipboardOut"
-                tabindex="-1"
-                data-tooltip="View the redacted version"
-              >
-                Redacted
-              </button>
-            </div>
-            <!-- Flush buttons are actions, not tabs: they live outside the tablist -->
-            <div class="tab-actions">
-              <button
-                class="tabBtn"
-                id="flushBtn"
-                data-tooltip="Flush Output"
-                aria-label="Flush output"
-              >
-                <i
-                  class="fa-solid fa-recycle icon-default"
-                  aria-hidden="true"
-                ></i>
-                <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
-              </button>
-              <button
-                class="tabBtn"
-                id="flushAllBtn"
-                data-tooltip="Flush Everything"
-                aria-label="Flush everything"
-              >
-                <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
-                <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="clipboard-panel">
-            <div
-              id="clipboardIn"
-              role="tabpanel"
-              aria-labelledby="tabIn"
-              contenteditable="true"
-              placeholder="Dump your text here..."
-            ></div>
-            <div
-              id="clipboardOut"
-              role="tabpanel"
-              aria-labelledby="tabOut"
-              contenteditable="false"
-              hidden
-            ></div>
+          <div class="clipboard-actions">
             <button
-              class="tabBtn"
+              class="clipboardBtn"
               id="copyBtn"
               data-tooltip="Copy redacted text"
               aria-label="Copy redacted text"
@@ -195,7 +146,17 @@
               <i class="fa-solid fa-copy" aria-hidden="true"></i>
               <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
             </button>
+            <button
+              class="clipboardBtn"
+              id="flushBtn"
+              data-tooltip="Flush Output"
+              aria-label="Flush output"
+            >
+              <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
+              <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
+            </button>
           </div>
+          <div id="clipboardOut" contenteditable="false"></div>
         </div>
       </section>
     </main>
