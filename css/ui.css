@@ -126,12 +126,18 @@
 
 #clipboardOut {
   background-color: var(--clipboard-bg-readonly);
+  box-shadow: none;
+  cursor: default;
+}
+
+#clipboardIn,
+#redactPatterns {
+  box-shadow: var(--shadow-panel);
 }
 
 #redactPatterns {
   flex: 1 1 auto;
   min-height: 120px; /* don't collapse on short viewports */
-  box-shadow: var(--shadow-panel);
 }
 
 /* Placeholder text in text fields */
