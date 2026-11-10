@@ -30,7 +30,6 @@ async function redactTxtDOM(redactFunc, replacement = "█████") {
 
   // Apply redaction on output if non-empty
   outEl.innerText = redactFunc(source.innerText, replacement);
-  switchToOut();
 }
 
 // Custom entity level function
