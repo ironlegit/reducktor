@@ -93,6 +93,9 @@
           <div
             id="clipboardIn"
             contenteditable="true"
+            role="textbox"
+            aria-multiline="true"
+            aria-label="Original text"
             placeholder="Dump your text here..."
           ></div>
         </div>
@@ -160,6 +163,9 @@
           <div
             id="clipboardOut"
             contenteditable="false"
+            role="region"
+            aria-multiline="true"
+            aria-label="Redacted output"
             placeholder="Redacted text appears here..."
           ></div>
         </div>
