@@ -31,7 +31,6 @@
   gap: 10px;
   min-width: 0; /* flex items refuse to shrink below content size by default */
   min-height: 0;
-  text-align: center;
 }
 
 .pane-label {
@@ -42,6 +41,7 @@
   color: var(--theme-color);
   opacity: 0.65;
   margin: 0 0 2px;
+  text-align: center;
 }
 
 /* --- Pane width ratios --- */
