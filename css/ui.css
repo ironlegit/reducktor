@@ -87,29 +87,16 @@
   padding: 8px;
   background-color: var(--clipboard-bg-out);
   box-shadow: var(--shadow-panel);
-  position: relative; /* anchors #copyBtn */
+  position: relative;
 }
 
-/* View tabs on the left, flush actions pushed to the right */
-.tab-bar {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  flex: 0 0 auto;
-}
-
-.tab-switcher {
-  display: flex;
-  gap: 4px;
-}
-
-.tab-actions {
+.clipboard-actions {
   display: flex;
   gap: 4px;
   margin-left: auto;
 }
 
-.tabBtn {
+.clipboardBtn {
   padding: 6px 18px;
   border: 0;
   border-radius: 8px;
@@ -119,26 +106,6 @@
   cursor: pointer;
   background-color: var(--clipboard-bg-out); /* inactive = darker */
   position: relative;
-}
-
-.tabBtn.active {
-  background-color: var(--clipboard-bg); /* active blends into the panel */
-  z-index: 2;
-}
-
-#copyBtn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.clipboard-panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  overflow: hidden;
-  min-height: 0;
 }
 
 /* Shared clipboard field styles */
@@ -461,13 +428,6 @@ body.dark-mode #darkmode-btn .icon-moon {
    6. ACCESSIBILITY HELPERS
    ============================================================ */
 
-/* The `hidden` attribute (set by setTab() in button.js) is the single
-   source of truth for which clipboard pane is visible. !important
-   guards against later display rules silently overriding it. */
-[hidden] {
-  display: none !important;
-}
-
 /* outline:none above removes all focus feedback from the contenteditable
    fields; give keyboard users a visible focus indicator back. */
 #clipboardIn:focus-visible,
@@ -489,15 +449,7 @@ body.dark-mode #darkmode-btn .icon-moon {
   .pane-patterns {
     flex: 0 0 auto;
   }
-  .pane-patterns #redactPatterns {
-    flex: none;
-    height: 15vh;
-  }
 
-  .pane-actions {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
   .pane-actions .redact-btn {
     width: auto;
     padding: 10px 20px;
@@ -510,7 +462,7 @@ body.dark-mode #darkmode-btn .icon-moon {
     flex: 0 0 auto;
   }
   .pane-main .clipboard-wrapper {
-    min-height: 40vh;
+    min-height: 30vh;
   }
 }
 
