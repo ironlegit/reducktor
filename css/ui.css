@@ -446,14 +446,6 @@ body.dark-mode #darkmode-btn .icon-moon {
     flex: 0 0 auto;
   }
 
-  .pane-actions .redact-btn {
-    width: auto;
-    padding: 10px 20px;
-  }
-  .pane-actions .pane-divider {
-    display: none; /* no divider in the horizontal wrap flow */
-  }
-
   .pane-output {
     flex: 0 0 auto;
   }
