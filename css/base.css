@@ -12,12 +12,18 @@
    1. BODY
    ============================================================ */
 
+/* Universal box-sizing reset: every element gets border-box sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   padding: 20px 4vw; /* Space around the edges of the page */
   background: var(--gradient-light);
   height: 100vh; /* Fill the screen height */
   margin: 0;
-  box-sizing: border-box;
   overflow: hidden; /* No page scrolling: panes scroll internally */
   font-family: var(--font-mono);
   color: var(--theme-color);

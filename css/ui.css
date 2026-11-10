@@ -59,7 +59,6 @@
 }
 
 .pane-actions .redact-btn {
-  box-sizing: border-box;
   width: 100%;
   padding: 10px 12px;
 }
@@ -70,7 +69,6 @@
   border-top: 1px solid var(--border-color);
   margin: 6px 0;
   width: 100%;
-  box-sizing: border-box;
 }
 
 /* ============================================================
@@ -166,13 +164,11 @@
 #clipboardOut {
   flex: 1;
   width: 100%;
-  box-sizing: border-box;
 }
 
 #redactPatterns {
   flex: 1 1 auto;
   min-height: 120px; /* don't collapse on short viewports */
-  box-sizing: border-box;
   box-shadow: var(--shadow-panel);
 }
 
@@ -328,7 +324,6 @@ body.dark-mode #darkmode-btn .icon-moon {
   position: fixed;
   top: 0;
   left: 0;
-  box-sizing: border-box;
   width: 250px;
   max-width: 85vw;
   height: 100vh;
