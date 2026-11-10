@@ -117,11 +117,14 @@
         <hr class="pane-divider" aria-hidden="true" />
 
         <p class="pane-label" id="patternsHeading">Custom patterns</p>
-        <div
-          id="redactPatterns"
-          contenteditable="true"
-          placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
-        ></div>
+
+        <div class="clipboard-wrapper">
+          <div
+            id="redactPatterns"
+            contenteditable="true"
+            placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
+          ></div>
+        </div>
 
         <div class="btn-grid" role="group" aria-label="Custom redaction">
           <button class="redact-btn" id="redactBtn">Redact Custom</button>
