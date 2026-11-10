@@ -59,9 +59,7 @@
 }
 
 .pane-actions .redact-btn {
-  box-sizing: border-box; /* width includes padding: no bleed into the
-                             neighboring pane (width:100% + padding would
-                             otherwise overflow the rail) */
+  box-sizing: border-box;
   width: 100%;
   padding: 10px 12px;
 }
@@ -189,6 +187,12 @@
 /* ============================================================
    3. BUTTONS
    ============================================================ */
+
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
 
 .toggle-container {
   position: fixed;

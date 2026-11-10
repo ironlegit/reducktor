@@ -75,34 +75,42 @@
     <!-- THREE-PANE WORKSPACE -->
     <main class="app-layout">
       <!-- LEFT PANE: custom redaction patterns -->
-      <section class="pane pane-patterns" aria-labelledby="patternsHeading">
-        <p class="pane-label" id="patternsHeading">Custom patterns</p>
-        <div
-          id="redactPatterns"
-          contenteditable="true"
-          placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
-        ></div>
-      </section>
 
       <!-- MIDDLE PANE: thematic NLP redactors, stacked vertically -->
       <section class="pane pane-actions" aria-labelledby="nlpHeading">
         <p class="pane-label" id="nlpHeading">Redactors</p>
-        <button class="redact-btn" id="redact-orgs-btn">Orgs</button>
-        <button class="redact-btn" id="redact-names-btn">Names</button>
-        <button class="redact-btn" id="redact-dates-btn">Dates</button>
-        <button class="redact-btn" id="redact-phones-btn">Phones</button>
-        <button class="redact-btn" id="redact-emails-btn">Emails</button>
-        <button class="redact-btn" id="redact-places-btn">Places</button>
+
+        <div class="btn-grid" role="group" aria-label="Entity redaction">
+          <button class="redact-btn" id="redact-orgs-btn">Orgs</button>
+          <button class="redact-btn" id="redact-names-btn">Names</button>
+          <button class="redact-btn" id="redact-dates-btn">Dates</button>
+          <button class="redact-btn" id="redact-phones-btn">Phones</button>
+          <button class="redact-btn" id="redact-emails-btn">Emails</button>
+          <button class="redact-btn" id="redact-places-btn">Places</button>
+        </div>
+
         <hr class="pane-divider" aria-hidden="true" />
-        <button class="redact-btn" id="redactBtn">Redact Custom Text</button>
-        <button
-          class="redact-btn"
-          id="reverseBtn"
-          aria-pressed="false"
-          data-tooltip="Reverses the order of the redaction pattern."
-        >
-          Reverse: off
-        </button>
+
+        <section class="pane pane-patterns" aria-labelledby="patternsHeading">
+          <p class="pane-label" id="patternsHeading">Custom patterns</p>
+          <div
+            id="redactPatterns"
+            contenteditable="true"
+            placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
+          ></div>
+        </section>
+
+        <div class="btn-grid" role="group" aria-label="Entity redactionj">
+          <button class="redact-btn" id="redactBtn">Redact Custom Text</button>
+          <button
+            class="redact-btn"
+            id="reverseBtn"
+            aria-pressed="false"
+            data-tooltip="Reverses the order of the redaction pattern."
+          >
+            Reverse: off
+          </button>
+        </div>
       </section>
 
       <!-- RIGHT PANE: main workspace -->
