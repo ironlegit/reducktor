@@ -76,19 +76,21 @@
     <main class="app-layout">
       <!-- LEFT PANE: custom redaction patterns -->
       <section class="pane pane-input" aria-labelledby="inputHeading">
-        <p class="pane-label" id="inputHeading">Original</p>
-
         <div class="clipboard-wrapper">
-          <div class="clipboard-actions">
-            <button
-              class="clipboardBtn"
-              id="flushAllBtn"
-              data-tooltip="Clear original and redacted text"
-              aria-label="Clear original and redacted text"
-            >
-              <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
-              <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
-            </button>
+          <div class="wrapper-title">
+            <span class="pane-label" id="inputHeading">Original</span>
+
+            <div class="clipboard-actions">
+              <button
+                class="clipboardBtn"
+                id="flushAllBtn"
+                data-tooltip="Clear original and redacted text"
+                aria-label="Clear original and redacted text"
+              >
+                <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
+                <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
           <div
             id="clipboardIn"
@@ -103,9 +105,11 @@
 
       <!-- MIDDLE PANE: thematic NLP redactors, stacked vertically -->
       <section class="pane pane-actions" aria-labelledby="nlpHeading">
-        <p class="pane-label" id="nlpHeading">Redactors</p>
-
         <div class="clipboard-wrapper">
+          <div class="wrapper-title">
+            <span class="pane-label" id="nlpHeading">Redactors</span>
+          </div>
+
           <div class="btn-grid" role="group" aria-label="Entity redaction">
             <button class="redact-btn" id="redact-orgs-btn">Orgs</button>
             <button class="redact-btn" id="redact-names-btn">Names</button>
@@ -116,52 +120,67 @@
           </div>
         </div>
 
-        <p class="pane-label" id="patternsHeading">Custom patterns</p>
-
         <div class="clipboard-wrapper" id="clipboard-wrapper-pattern">
+          <div class="wrapper-title">
+            <span class="pane-label" id="patternsHeading">Custom patterns</span>
+            <div class="clipboard-actions">
+              <button
+                class="clipboardBtn"
+                id="flushPatternBtn"
+                data-tooltip="Clear custom patterns"
+                aria-label="Clear custom patterns"
+              >
+                <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
+                <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
           <div
             id="redactPatterns"
             contenteditable="true"
             placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
           ></div>
-        </div>
 
-        <div class="btn-grid" role="group" aria-label="Custom redaction">
-          <button class="redact-btn" id="redactBtn">Redact Custom</button>
-          <button
-            class="redact-btn"
-            id="reverseBtn"
-            aria-pressed="false"
-            data-tooltip="Reverses the order of the redaction pattern."
-          >
-            Reverse: off
-          </button>
+          <div class="btn-grid" role="group" aria-label="Custom redaction">
+            <button class="redact-btn" id="redactBtn">Redact Custom</button>
+            <button
+              class="redact-btn"
+              id="reverseBtn"
+              aria-pressed="false"
+              data-tooltip="Reverses the order of the redaction pattern."
+            >
+              Reverse: off
+            </button>
+          </div>
         </div>
       </section>
 
       <!-- RIGHT PANE: main workspace -->
       <section class="pane pane-output" aria-labelledby="outputHeading">
-        <p class="pane-label" id="outputHeading">Redacted</p>
         <div class="clipboard-wrapper">
-          <div class="clipboard-actions">
-            <button
-              class="clipboardBtn"
-              id="copyBtn"
-              data-tooltip="Copy redacted text"
-              aria-label="Copy redacted text"
-            >
-              <i class="fa-solid fa-copy" aria-hidden="true"></i>
-              <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
-            </button>
-            <button
-              class="clipboardBtn"
-              id="flushBtn"
-              data-tooltip="Clear redacted text"
-              aria-label="Clear redacted text"
-            >
-              <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
-              <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
-            </button>
+          <div class="wrapper-title">
+            <span class="pane-label" id="outputHeading">Redacted</span>
+            <div class="clipboard-actions">
+              <button
+                class="clipboardBtn"
+                id="copyBtn"
+                data-tooltip="Copy redacted text"
+                aria-label="Copy redacted text"
+              >
+                <i class="fa-solid fa-copy" aria-hidden="true"></i>
+                <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
+              </button>
+              <button
+                class="clipboardBtn"
+                id="flushBtn"
+                data-tooltip="Clear redacted text"
+                aria-label="Clear redacted text"
+              >
+                <i class="fas fa-trash-can icon-default" aria-hidden="true"></i>
+                <i class="fa-solid fa-check icon-done" aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
           <div
             id="clipboardOut"

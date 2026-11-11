@@ -7,6 +7,10 @@ function flushInput() {
   document.getElementById("clipboardIn").textContent = "";
 }
 
+function flushPattern() {
+  document.getElementById("redactPatterns").textContent = "";
+}
+
 // REDACTION FUNCTIONS
 
 const MAX_TEXT_BYTES = 500_000;

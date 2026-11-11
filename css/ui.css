@@ -50,6 +50,23 @@
   padding: 10px 12px;
 }
 
+.wrapper-title {
+  margin: -8px -8px -8px;
+  padding: 6px 10px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.wrapper-title .pane-label {
+  grid-column: 2;
+}
+
+.wrapper-title .clipboard-actions {
+  grid-column: 3;
+  justify-self: end;
+}
+
 /* ============================================================
    2. TEXT PANES 
    ============================================================ */
@@ -145,8 +162,8 @@
   font-style: italic;
 }
 
-#patternsHeading {
-  margin-top: 20px;
+#nlpHeading {
+  margin: 8px 8px;
 }
 
 /* ============================================================

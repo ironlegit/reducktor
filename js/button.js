@@ -72,6 +72,12 @@ async function flushAllButtonAction() {
   flushInput();
 }
 
+async function flushPatternButtonAction() {
+  const btn = document.getElementById("flushPatternBtn");
+  showFeedback(btn);
+  flushPattern();
+}
+
 // COPY-PASTE BUTTON
 async function copyClipboardContent() {
   const content = document.getElementById("clipboardOut").innerText;
@@ -143,6 +149,9 @@ document
 document
   .getElementById("flushAllBtn")
   .addEventListener("click", flushAllButtonAction);
+document
+  .getElementById("flushPatternBtn")
+  .addEventListener("click", flushPatternButtonAction);
 document
   .getElementById("copyBtn")
   .addEventListener("click", copyClipboardContent);
