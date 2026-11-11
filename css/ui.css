@@ -9,7 +9,8 @@
   flex: 1 1 auto; /* fills the body column between header and footer */
   min-height: 0; /* lets children shrink instead of overflowing body */
   width: 100%;
-  margin: 24px 0 0; /* top margin, but no side margins */
+  max-width: 2200px;
+  margin: 24px auto 0;
 }
 
 .pane {
