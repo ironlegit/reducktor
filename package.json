@@ -3,6 +3,6 @@
   "private": true,
   "devDependencies": {
     "compromise": "14.19.0",
-    "compromise-dates": "3.10.0"
+    "compromise-dates": "3.11.0"
   }
 }
