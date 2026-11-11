@@ -52,21 +52,6 @@ function onPanelKeydown(e) {
   focusables[next].focus();
 }
 
-// CLIPBOARD TOGGLE IN / OUT
-function switchToOut() {
-  document.getElementById("clipboardIn").style.display = "none";
-  document.getElementById("clipboardOut").style.display = "block";
-  document.getElementById("tabIn").classList.remove("active");
-  document.getElementById("tabOut").classList.add("active");
-}
-
-function switchToIn() {
-  document.getElementById("clipboardIn").style.display = "block";
-  document.getElementById("clipboardOut").style.display = "none";
-  document.getElementById("tabOut").classList.remove("active");
-  document.getElementById("tabIn").classList.add("active");
-}
-
 // Flush button
 function showFeedback(btn) {
   btn.classList.add("is-done");
@@ -78,7 +63,6 @@ async function flushButtonAction() {
   const btn = document.getElementById("flushBtn");
   showFeedback(btn);
   flushOutput();
-  switchToIn();
 }
 
 async function flushAllButtonAction() {
@@ -86,7 +70,12 @@ async function flushAllButtonAction() {
   showFeedback(btn);
   flushOutput();
   flushInput();
-  switchToIn();
+}
+
+async function flushPatternButtonAction() {
+  const btn = document.getElementById("flushPatternBtn");
+  showFeedback(btn);
+  flushPattern();
 }
 
 // COPY-PASTE BUTTON
@@ -154,14 +143,15 @@ document.getElementById("panelCloseBtn").addEventListener("click", togglePanel);
 document
   .getElementById("darkmode-btn")
   .addEventListener("click", toggleDarkMode);
-document.getElementById("tabIn").addEventListener("click", switchToIn);
-document.getElementById("tabOut").addEventListener("click", switchToOut);
 document
   .getElementById("flushBtn")
   .addEventListener("click", flushButtonAction);
 document
   .getElementById("flushAllBtn")
   .addEventListener("click", flushAllButtonAction);
+document
+  .getElementById("flushPatternBtn")
+  .addEventListener("click", flushPatternButtonAction);
 document
   .getElementById("copyBtn")
   .addEventListener("click", copyClipboardContent);

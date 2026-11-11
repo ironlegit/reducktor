@@ -10,13 +10,18 @@
   <a href="https://sonarcloud.io/dashboard?id=ironlegit_reducktor"><img alt="Bugs" src="https://sonarcloud.io/api/project_badges/measure?project=ironlegit_reducktor&metric=bugs"></a>
 </p>
 
-**Re🦆tor** is a web tool that helps you remove sensitive information from text, including emails and log files. Use it to safely prepare text for pasting into an LLM chat or sharing with support.
+**Re🦆tor** is a small privacy-first web-app that scrubs sensitive information from text before you share it.
+
+Need to send logs to support, but not sure the API key is buried in there? Debugging with an LLM, but not keen on leaking every path, token and secret on your machine?
+
+<div align="center">
+<kbd>Paste in</kbd> &rarr; <kbd>Redact</kbd> → <kbd>Copy out</kbd>
+</div>
 
 # Features
 
-- **Custom Redactor**: Enter custom strings to remove sensitive information from your text.
+- **Custom Redactor**: Enter custom strings to remove or replace sensitive information from your text.
 - **Thematic Redactors**: Use thematic redaction options (based on [Compromise](https://github.com/spencermountain/compromise)) to remove sensitive information from your text.
-- **Name Redactor (decrepated)**: Use experimental name redaction to remove common first and last names from different regions. The names were selected from the Python [names-dataset](https://pypi.org/project/names-dataset/).
 
 ## How to use
 

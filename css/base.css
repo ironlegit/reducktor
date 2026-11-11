@@ -1,92 +1,103 @@
-/* BODY STYLES - LIGHT MODE */
-body {
-  padding: 20px; /* Space around the edges of the page */
-  background: var(--gradient-light); /* Use the light gradient background */
-  height: 100vh; /* Make sure the body fills the whole screen height */
-  margin: 0; /* Remove default margins */
-  font-family: var(--font-mono);
-  transition: background 0.5s ease; /* Smooth transition when changing themes */
-  color: var(--theme-color); /* Default text color */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack elements vertically */
+/* ============================================================
+   1. BODY
+   ============================================================ */
+
+/* Universal box-sizing reset: every element gets border-box sizing */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  overflow: hidden;
 }
 
-/* BODY STYLES - DARK MODE */
+body {
+  padding: 20px 4vw; /* Space around the edges of the page */
+  background: var(--gradient-light);
+  height: 100vh; /* Fill the screen height */
+  margin: 0;
+  overflow: hidden; /* No page scrolling: panes scroll internally */
+  font-family: var(--font-mono);
+  color: var(--theme-color);
+  display: flex;
+  flex-direction: column; /* Stack: header → panes → footer */
+  transition: background 0.5s ease; /* Smooth theme transition */
+}
+
+/* Dark mode: swap the theme variables once here; every
+   var(--…) consumer re-themes automatically. */
 body.dark-mode {
-  --theme-color: var(--theme-color-dark); /* Light text color for dark mode */
-  --clipboard-bg: var(--clipboard-bg-dark); /* Input clipboard background */
-  --clipboard-bg-out: var(
-    --clipboard-bg-dark-out
-  ); /* Output clipboard background */
-  --shadow-color: rgba(0, 0, 0, 0.3); /* Darker shadow for dark mode */
-  --border-color: #444; /* Darker border for dark mode */
-  background: var(--gradient-dark); /* Apply dark gradient background */
-  color: var(--theme-color); /* Update text color for dark mode */
+  --theme-color: var(--theme-color-dark);
+  --clipboard-bg: var(--clipboard-bg-dark);
+  --clipboard-bg-readonly: rgba(30, 30, 40, 0.4);
+  --clipboard-bg-out: var(--clipboard-bg-dark-out);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --border-color: #444;
+  background: var(--gradient-dark);
+  color: var(--theme-color);
 }
 
-/* HEADER STYLES */
+/* ============================================================
+   2. HEADER
+   ============================================================ */
+
 .svg-container {
   display: flex;
-  justify-content: center; /* Horizontal centering */
-  align-items: center; /* Vertical centering  */
-  width: 100%; /* Full width of parent */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .svg-container img {
-  width: 400px; /* Set your desired width */
-  height: auto; /* Maintain aspect ratio */
+  width: 400px;
+  height: auto;
   max-width: 100%; /* Prevent overflow */
 }
 
 h4 {
-  text-align: center; /* Center the text */
-  margin: 10px auto; /* Space above and below, center horizontally */
-  font-variant: small-caps; /* Convert text to small caps */
-  color: var(--theme-color); /* Use theme-aware text color */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-  transition: color 0.3s ease; /* Smooth color transition when themes change */
-}
-
-h4 {
+  text-align: center;
+  margin: 10px auto;
   font-family: var(--font-mono);
   font-size: 16px;
+  font-variant: small-caps;
   letter-spacing: 14px;
+  color: var(--theme-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle depth */
+  transition: color 0.3s ease; /* Smooth theme transition */
 }
 
-/* FOOTER STYLES */
+/* ============================================================
+   3. FOOTER
+   ============================================================ */
+
 .footer {
   display: flex;
   flex-direction: column;
-  text-align: center; /* Center the text */
-  padding: 10px; /* Internal spacing */
-  margin-top: auto; /* Push to bottom */
-  color: var(--footer-color); /* Footer text color (changes with theme) */
-  font-family: "Consolas", monospace; /* Monospace font */
-  font-size: 10px; /* Small font size */
-  transition: color 0.3s ease; /* Smooth color transition */
   align-items: center;
   gap: 6px;
+  text-align: center;
+  padding: 10px;
+  margin-top: auto; /* Push to the bottom of the body column */
+  width: 100%;
+  color: var(--footer-color);
+  font-family: "Consolas", monospace;
+  font-size: 10px;
+  transition: color 0.3s ease;
 }
 
-/* FOOTER STYLES IN DARK MODE */
 body.dark-mode .footer {
-  color: var(--footer-color-dark); /* Dark mode footer color */
+  color: var(--footer-color-dark);
 }
 
-/*FOOTER TEXT TOGGLE */
+/* Footer text toggle: light/dark captions swap with the theme */
 .footer-dark {
-  display: none; /* Hide dark mode text by default */
+  display: none;
 }
 body.dark-mode .footer-light {
-  display: none; /* Hide light mode text in dark mode */
+  display: none;
 }
 body.dark-mode .footer-dark {
-  display: block; /* Show dark mode text in dark mode */
+  display: block;
 }
 
-/* FOOTER GITHUB */
 .footer-github {
   color: inherit;
   display: inline-flex;
