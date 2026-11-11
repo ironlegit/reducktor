@@ -107,16 +107,16 @@
       <section class="pane pane-actions" aria-labelledby="nlpHeading">
         <div class="clipboard-wrapper">
           <div class="wrapper-title">
-            <span class="pane-label" id="nlpHeading">Redactors</span>
+            <span class="pane-label" id="nlpHeading">NLP Redactors</span>
           </div>
 
           <div class="btn-grid" role="group" aria-label="Entity redaction">
-            <button class="redact-btn" id="redact-orgs-btn">Orgs</button>
             <button class="redact-btn" id="redact-names-btn">Names</button>
             <button class="redact-btn" id="redact-dates-btn">Dates</button>
             <button class="redact-btn" id="redact-phones-btn">Phones</button>
             <button class="redact-btn" id="redact-emails-btn">Emails</button>
             <button class="redact-btn" id="redact-places-btn">Places</button>
+            <button class="redact-btn" id="redact-orgs-btn">Orgs</button>
           </div>
         </div>
 
@@ -142,7 +142,12 @@
             placeholder="One pattern per line. Use /%/ to replace a pattern with a custom word."
           ></div>
 
-          <div class="btn-grid" role="group" aria-label="Custom redaction">
+          <div
+            class="btn-grid"
+            id="btn-grid-custom"
+            role="group"
+            aria-label="Custom redaction"
+          >
             <button class="redact-btn" id="redactBtn">Redact Custom</button>
             <button
               class="redact-btn"
