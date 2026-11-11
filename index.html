@@ -105,20 +105,20 @@
       <section class="pane pane-actions" aria-labelledby="nlpHeading">
         <p class="pane-label" id="nlpHeading">Redactors</p>
 
-        <div class="btn-grid" role="group" aria-label="Entity redaction">
-          <button class="redact-btn" id="redact-orgs-btn">Orgs</button>
-          <button class="redact-btn" id="redact-names-btn">Names</button>
-          <button class="redact-btn" id="redact-dates-btn">Dates</button>
-          <button class="redact-btn" id="redact-phones-btn">Phones</button>
-          <button class="redact-btn" id="redact-emails-btn">Emails</button>
-          <button class="redact-btn" id="redact-places-btn">Places</button>
+        <div class="clipboard-wrapper">
+          <div class="btn-grid" role="group" aria-label="Entity redaction">
+            <button class="redact-btn" id="redact-orgs-btn">Orgs</button>
+            <button class="redact-btn" id="redact-names-btn">Names</button>
+            <button class="redact-btn" id="redact-dates-btn">Dates</button>
+            <button class="redact-btn" id="redact-phones-btn">Phones</button>
+            <button class="redact-btn" id="redact-emails-btn">Emails</button>
+            <button class="redact-btn" id="redact-places-btn">Places</button>
+          </div>
         </div>
-
-        <hr class="pane-divider" aria-hidden="true" />
 
         <p class="pane-label" id="patternsHeading">Custom patterns</p>
 
-        <div class="clipboard-wrapper">
+        <div class="clipboard-wrapper" id="clipboard-wrapper-pattern">
           <div
             id="redactPatterns"
             contenteditable="true"

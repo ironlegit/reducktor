@@ -50,16 +50,8 @@
   padding: 10px 12px;
 }
 
-/* Divider between the thematic NLP redactors and the custom ones */
-.pane-divider {
-  border: 0;
-  border-top: 1px solid var(--border-color);
-  margin: 6px 0;
-  width: 100%;
-}
-
 /* ============================================================
-   2. ORIGINAL AND REDACTED TEXT FIELDS
+   2. TEXT PANES 
    ============================================================ */
 
 .clipboard-wrapper {
@@ -74,6 +66,14 @@
   background-color: var(--clipboard-bg-out);
   box-shadow: var(--shadow-panel);
   position: relative;
+}
+
+.pane-actions .clipboard-wrapper {
+  flex: none;
+}
+
+#clipboard-wrapper-pattern {
+  flex: 1 1 auto;
 }
 
 .clipboard-actions {
@@ -114,6 +114,7 @@
   min-height: 0; /* lets the field shrink below its content height */
   outline: none;
   transition: var(--transition-base);
+  box-shadow: var(--shadow-panel);
 }
 
 /* The two main clipboards fill the workspace; the patterns field
@@ -130,11 +131,6 @@
   cursor: default;
 }
 
-#clipboardIn,
-#redactPatterns {
-  box-shadow: var(--shadow-panel);
-}
-
 #redactPatterns {
   flex: 1 1 auto;
   min-height: 120px; /* don't collapse on short viewports */
@@ -147,6 +143,10 @@
   content: attr(placeholder);
   color: #666;
   font-style: italic;
+}
+
+#patternsHeading {
+  margin-top: 20px;
 }
 
 /* ============================================================
