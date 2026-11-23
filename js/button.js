@@ -121,6 +121,18 @@ function getPlaceholder(type) {
 // CSP does not allow inline handlers (onclick/onchange)
 // Every interactive element is wired by its id
 
+// INTERCEPT PASTE AND USE PLAIN-TEXT ONLY (CP STYLE NOT ALLOWED)
+const inputPane = document.getElementById("clipboardIn");
+
+function insertPlainText(e) {
+  e.preventDefault(); // prevent styled txt to enter DOM
+  const text = e.clipboardData.getData("text/plain");
+  if (text) document.execCommand("insertText", false, text);
+}
+
+inputPane.addEventListener("paste", insertPlainText);
+inputPane.addEventListener("drop", insertPlainText);
+
 // REDACT + REVERSE BUTTONS
 let reversed = false;
 const reverseBtn = document.getElementById("reverseBtn");
