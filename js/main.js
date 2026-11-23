@@ -226,8 +226,8 @@ function buildRedactionRegex(targets) {
   // Note: Unicode-aware boundaries also matches "Peter!" or "#Peter", but not "1Peter" or "aPeter"
   try {
     return new RegExp(
-      `(?<![\\p{L}\\p{N}_])(?:${alternation})(?![\\p{L}\\p{N}_])`,
-      "gu",
+      `(?<![\\p{L}\\p{N}])(?:${alternation})(?![\\p{L}\\p{N}])`,
+      flags,
     );
   } catch {
     return null;
