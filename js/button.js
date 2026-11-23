@@ -117,6 +117,22 @@ function getPlaceholder(type) {
   }
 }
 
+// EVENT WIRING
+// CSP does not allow inline handlers (onclick/onchange)
+// Every interactive element is wired by its id
+
+// INTERCEPT PASTE AND USE PLAIN-TEXT ONLY (CP STYLE NOT ALLOWED)
+const inputPane = document.getElementById("clipboardIn");
+
+function insertPlainText(e) {
+  e.preventDefault(); // prevent styled txt to enter DOM
+  const text = e.clipboardData.getData("text/plain");
+  if (text) document.execCommand("insertText", false, text);
+}
+
+inputPane.addEventListener("paste", insertPlainText);
+inputPane.addEventListener("drop", insertPlainText);
+
 // REDACT + REVERSE BUTTONS
 let reversed = false;
 const reverseBtn = document.getElementById("reverseBtn");
@@ -134,9 +150,7 @@ reverseBtn.addEventListener("click", () => {
   reverseBtn.textContent = reversed ? "Reverse: on" : "Reverse: off";
 });
 
-// EVENT WIRING
-// CSP does not allow inline handlers (onclick/onchange)
-// Every interactive element is wired by its id
+//  SIDEPANEL AND DARKMODE
 document.getElementById("sidebar-btn").addEventListener("click", togglePanel);
 document.getElementById("panelBackdrop").addEventListener("click", togglePanel);
 document.getElementById("panelCloseBtn").addEventListener("click", togglePanel);
@@ -156,7 +170,18 @@ document
   .getElementById("copyBtn")
   .addEventListener("click", copyClipboardContent);
 
-// Thematic NLP redactors
+// DEMO BUTTON
+document.getElementById("demoBtn").addEventListener("click", () => {
+  document.getElementById("clipboardIn").innerText = DEMO_TEXT;
+  document.getElementById("redactPatterns").innerText = DEMO_PATTERNS;
+});
+
+// REDACTION RADIO PILL FOR PLACEHOLDER
+document
+  .getElementById("placeholderMode")
+  .addEventListener("change", toggleRedactionPlaceholder);
+
+// NLP REDACTORS
 document
   .getElementById("redact-orgs-btn")
   .addEventListener("click", redactOrgs);
@@ -175,11 +200,6 @@ document
 document
   .getElementById("redact-places-btn")
   .addEventListener("click", redactPlaces);
-
-// Redaction placeholder (Block / Labelled) radio pills
-document
-  .getElementById("placeholderMode")
-  .addEventListener("change", toggleRedactionPlaceholder);
 
 // Mobile Popup
 document.getElementById("mobileDismissBtn").addEventListener("click", () => {

@@ -222,7 +222,7 @@
         <h2 class="panel-title">Redaction Parameters</h2>
 
         <div class="panel-section">
-          <p class="section-label">Redaction Placeholder</p>
+          <h3 class="section-label">Redaction Placeholder</h3>
           <div class="pill-group" id="placeholderMode">
             <input
               type="radio"
@@ -250,6 +250,18 @@
               data-tooltip="Use labelled placeholders: [REDACTED-DATE]"
               >Labelled</label
             >
+          </div>
+
+          <h3 class="section-label">Regex Flags</h3>
+          <div class="pill-group">
+            <input type="checkbox" id="ignoreCase" />
+
+            <label
+              for="ignoreCase"
+              class="pill"
+              data-tooltip="Case insensitive matching for custom redaction"
+              >Case-insensitive
+            </label>
           </div>
         </div>
       </div>

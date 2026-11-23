@@ -215,7 +215,9 @@ function buildPatternMap(rawLines, reversed) {
 
 // Build Regex pattern
 // Note: Requires lookbehind (all modern browsers, Safari 16.4+).
-function buildRedactionRegex(targets) {
+function buildRedactionRegex(targets, { caseInsensitive = false } = {}) {
+  const flags = caseInsensitive ? "giu" : "gu";
+
   const alternation = [...targets]
     // Longest-first so "Peterson" wins over "Peter".
     .sort((a, b) => b.length - a.length)
@@ -226,18 +228,18 @@ function buildRedactionRegex(targets) {
   // Note: Unicode-aware boundaries also matches "Peter!" or "#Peter", but not "1Peter" or "aPeter"
   try {
     return new RegExp(
-      `(?<![\\p{L}\\p{N}_])(?:${alternation})(?![\\p{L}\\p{N}_])`,
-      "gu",
+      `(?<![\\p{L}\\p{N}])(?:${alternation})(?![\\p{L}\\p{N}])`,
+      flags,
     );
   } catch {
     return null;
   }
 }
 
-function applyPatterns(txt, patternMap, defaultReplacement) {
+function applyPatterns(txt, patternMap, defaultReplacement, options) {
   if (patternMap.size === 0) return txt;
 
-  const regex = buildRedactionRegex(patternMap.keys());
+  const regex = buildRedactionRegex(patternMap.keys(), options);
 
   // Function replacer: prevents "$&"/"$1" substitution in replacement
   // strings, and a single pass guarantees replacements are never
@@ -251,6 +253,10 @@ function applyPatterns(txt, patternMap, defaultReplacement) {
 }
 
 async function redactText(reversed = false) {
+  const options = {
+    caseInsensitive: document.getElementById("ignoreCase").checked,
+  };
+
   const el = document.getElementById("redactPatterns");
   const patterns = buildPatternMap(el.innerText.split("\n"), reversed);
 
@@ -260,7 +266,7 @@ async function redactText(reversed = false) {
       return;
     }
     await redactTxtDOM((txt) =>
-      applyPatterns(txt, patterns, getPlaceholder("custom")),
+      applyPatterns(txt, patterns, getPlaceholder("custom"), options),
     );
   } finally {
     // drop all pattern references after redaction
@@ -274,7 +280,7 @@ const DEMO_TEXT = `My name is Doug Rattmann from Sweden and I am getting this er
 [2026-10-15 14:32:45] INFO: Initializing payment service
 [2026-10-15 14:32:46] DEBUG: Connecting to CryptoScam API with key: cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuV99umP9qR0sTu1vW
 [2026-10-15 14:32:47] INFO: Authentication successful
-[2026-10-15 14:32:48] ERROR: Failed to process payment. Response: {"error": "Invalid card", "api_key_used": "cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuVDDgJo182fA99umP9qR0sTu1vW"}
+[2026-10-15 14:32:48] ERROR: Failed to process payment. Response: {"error": "Invalid card", "api_key_used": "cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuV99umP9qR0sTu1vW"}
 
 
 My username is doug@umbrella-corp.com by the way.
@@ -286,8 +292,3 @@ const DEMO_PATTERNS =
   "Doug Rattmann /%/ John Doe" +
   "\n" +
   "cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuV99umP9qR0sTu1vW";
-
-document.getElementById("demoBtn").addEventListener("click", () => {
-  document.getElementById("clipboardIn").innerText = DEMO_TEXT;
-  document.getElementById("redactPatterns").innerText = DEMO_PATTERNS;
-});

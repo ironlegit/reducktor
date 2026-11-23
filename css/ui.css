@@ -392,7 +392,7 @@ body.dark-mode #darkmode-btn .icon-moon {
   opacity: 0.65;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin: 0 0 8px;
+  margin: 10 10 8px;
 }
 
 .pill-group {
@@ -402,7 +402,7 @@ body.dark-mode #darkmode-btn .icon-moon {
 }
 
 /* Visually hide the native radio, keep it accessible to keyboards/AT */
-.pill-group input[type="radio"] {
+.pill-group input {
   position: absolute;
   opacity: 0;
   width: 1px;
@@ -417,8 +417,10 @@ body.dark-mode #darkmode-btn .icon-moon {
   font-size: 13px;
   padding: 6px 12px;
   color: var(--sidebar-text-color);
-  opacity: 0.7;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.04);
+  opacity: 0.85;
+  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.04);
+  /* border: 1px solid black; */
   transition:
     background 0.15s ease,
     opacity 0.15s ease,
@@ -429,14 +431,14 @@ body.dark-mode #darkmode-btn .icon-moon {
   background: rgba(255, 255, 255, 0.06);
 }
 
-.pill-group input[type="radio"]:checked + .pill {
+.pill-group input:checked + .pill {
   opacity: 1;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.35);
 }
 
 /* Keyboard focus ring — only for keyboard users, not mouse clicks */
-.pill-group input[type="radio"]:focus-visible + .pill {
+.pill-group input:focus-visible + .pill {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
