@@ -292,8 +292,3 @@ const DEMO_PATTERNS =
   "Doug Rattmann /%/ John Doe" +
   "\n" +
   "cs_live_51HyJ4K2eZvX5NM7dj10w7X2AzAVUPm9SoL0HuV99umP9qR0sTu1vW";
-
-document.getElementById("demoBtn").addEventListener("click", () => {
-  document.getElementById("clipboardIn").innerText = DEMO_TEXT;
-  document.getElementById("redactPatterns").innerText = DEMO_PATTERNS;
-});
