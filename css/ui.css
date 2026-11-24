@@ -462,25 +462,31 @@ body.dark-mode #darkmode-btn .icon-moon {
 }
 
 /* ============================================================
-   7. RESPONSIVE FALLBACKS
+   7. MOBILE VIEWPORT 
    ============================================================ */
 
 /* NARROW WINDOWS: collapse the three panes into a stacked flow */
 @media (max-width: 1099px) {
   .app-layout {
     flex-direction: column;
-    overflow-y: auto; /* body is overflow: hidden, so scroll here */
+    gap: 12px;
   }
 
-  .pane-input {
-    flex: 0 0 auto;
-  }
-
+  .pane-input,
+  .pane-actions,
   .pane-output {
     flex: 0 0 auto;
   }
-  .pane-output .clipboard-wrapper {
-    min-height: 30vh;
+
+  #clipboardIn,
+  #clipboardOut {
+    flex: none;
+    min-height: 40vh;
+    min-height: 40dvh;
+  }
+
+  .toggle-container {
+    position: absolute;
   }
 }
 
@@ -489,6 +495,19 @@ body.dark-mode #darkmode-btn .icon-moon {
   display: none;
 }
 
+.mobile-dismiss-btn {
+  margin-top: 1.5rem;
+  padding: 12px 24px;
+  min-height: 44px;
+  border: none;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #121212;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Resize on mobile screen */
 @media (max-width: 768px) {
   .mobile-block {
     display: flex;
@@ -504,25 +523,35 @@ body.dark-mode #darkmode-btn .icon-moon {
     color: #f0f0f0;
   }
 
-  /* Hide everything else until the user dismisses */
+  /* Hide everything until user dismisses mobile block */
   body:not(.mobile-dismissed) > *:not(.mobile-block) {
     display: none !important;
   }
 
-  /* Dismissed: hide the notice, everything else becomes visible again */
+  /* Dismissed: hide the notice */
   body.mobile-dismissed .mobile-block {
     display: none;
   }
+
+  .btn-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #btn-grid-custom {
+    grid-template-columns: 1fr;
+  }
+
+  #clipboardIn,
+  #clipboardOut,
+  #redactPatterns {
+    font-size: 16px;
+  }
 }
 
-.mobile-dismiss-btn {
-  margin-top: 1.5rem;
-  padding: 12px 24px;
-  min-height: 44px;
-  border: none;
-  border-radius: 8px;
-  background: #f0f0f0;
-  color: #121212;
-  font-size: 14px;
-  cursor: pointer;
+/* Inactivate tooltip on mobile */
+@media (hover: none) {
+  [data-tooltip]::after,
+  [data-tooltip]::before {
+    display: none;
+  }
 }
