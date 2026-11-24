@@ -215,8 +215,8 @@ function buildPatternMap(rawLines, reversed) {
 
 // Build Regex pattern
 // Note: Requires lookbehind (all modern browsers, Safari 16.4+).
-function buildRedactionRegex(targets, { caseInsensitive = false } = {}) {
-  const flags = caseInsensitive ? "giu" : "gu";
+function buildRedactionRegex(targets, { ignoreCase = false } = {}) {
+  const flags = ignoreCase ? "giu" : "gu";
 
   const alternation = [...targets]
     // Longest-first so "Peterson" wins over "Peter".
@@ -240,11 +240,11 @@ function applyPatterns(
   txt,
   patternMap,
   defaultReplacement,
-  { caseInsensitive = false } = {},
+  { ignoreCase = false } = {},
 ) {
   if (patternMap.size === 0) return txt;
 
-  const regex = buildRedactionRegex(patternMap.keys(), { caseInsensitive });
+  const regex = buildRedactionRegex(patternMap.keys(), { ignoreCase });
 
   // Function replacer: prevents "$&"/"$1" substitution in replacement
   // strings, and a single pass guarantees replacements are never
@@ -257,7 +257,7 @@ function applyPatterns(
   );
 }
 
-async function redactText({ reversed = false, caseInsensitive = false } = {}) {
+async function redactText({ reversed = false, ignoreCase = false } = {}) {
   const el = document.getElementById("redactPatterns");
   const patterns = buildPatternMap(el.innerText.split("\n"), reversed);
 
@@ -268,7 +268,7 @@ async function redactText({ reversed = false, caseInsensitive = false } = {}) {
     }
     await redactTxtDOM((txt) =>
       applyPatterns(txt, patterns, getPlaceholder("custom"), {
-        caseInsensitive,
+        ignoreCase,
       }),
     );
   } finally {

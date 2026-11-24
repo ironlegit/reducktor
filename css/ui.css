@@ -402,7 +402,7 @@ body.dark-mode #darkmode-btn .icon-moon {
   opacity: 0.65;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin: 10 10 8px;
+  margin: 10px 10px 8px;
 }
 
 .pill-group {
@@ -430,7 +430,6 @@ body.dark-mode #darkmode-btn .icon-moon {
   background: rgba(255, 255, 255, 0.04);
   opacity: 0.85;
   box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.04);
-  /* border: 1px solid black; */
   transition:
     background 0.15s ease,
     opacity 0.15s ease,
@@ -438,7 +437,7 @@ body.dark-mode #darkmode-btn .icon-moon {
 }
 
 .pill:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .pill-group input:checked + .pill {

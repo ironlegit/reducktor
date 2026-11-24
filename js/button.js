@@ -147,7 +147,12 @@ function bindToggle(btn, onText, offText) {
   return () => on;
 }
 
-const isReversed = bindToggle(reverseBtn, "Reverse: on", "Reverse: off");
+const isReversed = bindToggle(
+  document.getElementById("reverseBtn"),
+  "Reverse: on",
+  "Reverse: off",
+);
+
 const isIgnoreCase = bindToggle(
   document.getElementById("ignoreCaseBtn"),
   "Ignore case: on",
@@ -155,7 +160,7 @@ const isIgnoreCase = bindToggle(
 );
 
 document.getElementById("redactBtn").addEventListener("click", () => {
-  redactText({ reversed: isReversed(), caseInsensitive: isIgnoreCase() }).catch(
+  redactText({ reversed: isReversed(), ignoreCase: isIgnoreCase() }).catch(
     (err) =>
       console.error("redaction failed:", err && err.name, err && err.message),
   );
