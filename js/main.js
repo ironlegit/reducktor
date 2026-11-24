@@ -236,10 +236,15 @@ function buildRedactionRegex(targets, { caseInsensitive = false } = {}) {
   }
 }
 
-function applyPatterns(txt, patternMap, defaultReplacement, options) {
+function applyPatterns(
+  txt,
+  patternMap,
+  defaultReplacement,
+  { caseInsensitive = false } = {},
+) {
   if (patternMap.size === 0) return txt;
 
-  const regex = buildRedactionRegex(patternMap.keys(), options);
+  const regex = buildRedactionRegex(patternMap.keys(), { caseInsensitive });
 
   // Function replacer: prevents "$&"/"$1" substitution in replacement
   // strings, and a single pass guarantees replacements are never
@@ -252,11 +257,7 @@ function applyPatterns(txt, patternMap, defaultReplacement, options) {
   );
 }
 
-async function redactText(reversed = false) {
-  const options = {
-    caseInsensitive: document.getElementById("ignoreCase").checked,
-  };
-
+async function redactText({ reversed = false, caseInsensitive = false } = {}) {
   const el = document.getElementById("redactPatterns");
   const patterns = buildPatternMap(el.innerText.split("\n"), reversed);
 
@@ -266,7 +267,9 @@ async function redactText(reversed = false) {
       return;
     }
     await redactTxtDOM((txt) =>
-      applyPatterns(txt, patterns, getPlaceholder("custom"), options),
+      applyPatterns(txt, patterns, getPlaceholder("custom"), {
+        caseInsensitive,
+      }),
     );
   } finally {
     // drop all pattern references after redaction
