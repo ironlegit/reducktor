@@ -123,3 +123,19 @@ body.dark-mode .footer-dark {
   }
 }
 
+/* Mobile screens - Resize objects */
+
+@media (max-width: 768px) {
+  body {
+    padding: 12px 16px 20px;
+  }
+
+  .svg-container img {
+    width: 200px;
+  }
+
+  h4 {
+    font-size: 12px;
+    letter-spacing: 4px;
+  }
+}
