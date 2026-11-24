@@ -133,21 +133,32 @@ function insertPlainText(e) {
 inputPane.addEventListener("paste", insertPlainText);
 inputPane.addEventListener("drop", insertPlainText);
 
-// REDACT + REVERSE BUTTONS
-let reversed = false;
-const reverseBtn = document.getElementById("reverseBtn");
+// CUSTOM REDACTION BUTTONS
+
+// REVERSE and IGNORE-CASE BUTTON (ON/OFF LOGIC)
+function bindToggle(btn, onText, offText) {
+  let on = false;
+  btn.setAttribute("aria-pressed", "false");
+  btn.addEventListener("click", () => {
+    on = !on;
+    btn.setAttribute("aria-pressed", String(on));
+    btn.textContent = on ? onText : offText;
+  });
+  return () => on;
+}
+
+const isReversed = bindToggle(reverseBtn, "Reverse: on", "Reverse: off");
+const isIgnoreCase = bindToggle(
+  document.getElementById("ignoreCaseBtn"),
+  "Ignore case: on",
+  "Ignore case: off",
+);
 
 document.getElementById("redactBtn").addEventListener("click", () => {
-  redactText(reversed).catch((err) => {
-    // Reaching the clipboard can fail due to permission denied, tab unfocused
-    console.error("redaction failed:", err && err.name, err && err.message);
-  });
-});
-
-reverseBtn.addEventListener("click", () => {
-  reversed = !reversed;
-  reverseBtn.setAttribute("aria-pressed", String(reversed));
-  reverseBtn.textContent = reversed ? "Reverse: on" : "Reverse: off";
+  redactText({ reversed: isReversed(), caseInsensitive: isIgnoreCase() }).catch(
+    (err) =>
+      console.error("redaction failed:", err && err.name, err && err.message),
+  );
 });
 
 //  SIDEPANEL AND DARKMODE
