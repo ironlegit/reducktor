@@ -108,3 +108,18 @@ body.dark-mode .footer-dark {
 .footer-github:hover {
   opacity: 1;
 }
+
+/* ============================================================
+   4. MOBILE VIEWPORT
+   ============================================================ */
+
+/* Make page scrollable on narrow screen */
+@media (max-width: 1099px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+}
+
