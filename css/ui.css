@@ -214,6 +214,10 @@
 .redact-btn {
   border-radius: 8px;
   padding: 10px 20px;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .redact-btn[aria-pressed="true"] {
