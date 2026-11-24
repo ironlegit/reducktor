@@ -177,8 +177,14 @@
   gap: 10px;
 }
 
+/* Custom arrangement of custom redaction buttons */
 #btn-grid-custom {
-  grid-template-columns: repeat(2, 1fr);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#btn-grid-custom > :first-child {
+  grid-column: 1 / -1;
 }
 
 .toggle-container {
