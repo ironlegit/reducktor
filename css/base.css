@@ -114,7 +114,7 @@ body.dark-mode .footer-dark {
    ============================================================ */
 
 /* Make page scrollable on narrow screen */
-@media (max-width: 1099px) {
+@media (max-width: 1200px) {
   body {
     height: auto;
     min-height: 100vh;

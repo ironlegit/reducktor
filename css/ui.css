@@ -475,7 +475,7 @@ body.dark-mode #darkmode-btn .icon-moon {
    ============================================================ */
 
 /* NARROW WINDOWS: collapse the three panes into a stacked flow */
-@media (max-width: 1099px) {
+@media (max-width: 1200px) {
   .app-layout {
     flex-direction: column;
     gap: 12px;
