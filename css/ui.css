@@ -177,8 +177,14 @@
   gap: 10px;
 }
 
+/* Custom arrangement of custom redaction buttons */
 #btn-grid-custom {
-  grid-template-columns: repeat(2, 1fr);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#btn-grid-custom > :first-child {
+  grid-column: 1 / -1;
 }
 
 .toggle-container {
@@ -208,6 +214,10 @@
 .redact-btn {
   border-radius: 8px;
   padding: 10px 20px;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .redact-btn[aria-pressed="true"] {
@@ -392,7 +402,7 @@ body.dark-mode #darkmode-btn .icon-moon {
   opacity: 0.65;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin: 10 10 8px;
+  margin: 10px 10px 8px;
 }
 
 .pill-group {
@@ -420,7 +430,6 @@ body.dark-mode #darkmode-btn .icon-moon {
   background: rgba(255, 255, 255, 0.04);
   opacity: 0.85;
   box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.04);
-  /* border: 1px solid black; */
   transition:
     background 0.15s ease,
     opacity 0.15s ease,
@@ -428,7 +437,7 @@ body.dark-mode #darkmode-btn .icon-moon {
 }
 
 .pill:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .pill-group input:checked + .pill {
@@ -462,25 +471,31 @@ body.dark-mode #darkmode-btn .icon-moon {
 }
 
 /* ============================================================
-   7. RESPONSIVE FALLBACKS
+   7. MOBILE VIEWPORT 
    ============================================================ */
 
 /* NARROW WINDOWS: collapse the three panes into a stacked flow */
-@media (max-width: 1099px) {
+@media (max-width: 1200px) {
   .app-layout {
     flex-direction: column;
-    overflow-y: auto; /* body is overflow: hidden, so scroll here */
+    gap: 12px;
   }
 
-  .pane-input {
-    flex: 0 0 auto;
-  }
-
+  .pane-input,
+  .pane-actions,
   .pane-output {
     flex: 0 0 auto;
   }
-  .pane-output .clipboard-wrapper {
-    min-height: 30vh;
+
+  #clipboardIn,
+  #clipboardOut {
+    flex: none;
+    min-height: 40vh;
+    min-height: 40dvh;
+  }
+
+  .toggle-container {
+    position: absolute;
   }
 }
 
@@ -489,6 +504,19 @@ body.dark-mode #darkmode-btn .icon-moon {
   display: none;
 }
 
+.mobile-dismiss-btn {
+  margin-top: 1.5rem;
+  padding: 12px 24px;
+  min-height: 44px;
+  border: none;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #121212;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Resize on mobile screen */
 @media (max-width: 768px) {
   .mobile-block {
     display: flex;
@@ -504,25 +532,35 @@ body.dark-mode #darkmode-btn .icon-moon {
     color: #f0f0f0;
   }
 
-  /* Hide everything else until the user dismisses */
+  /* Hide everything until user dismisses mobile block */
   body:not(.mobile-dismissed) > *:not(.mobile-block) {
     display: none !important;
   }
 
-  /* Dismissed: hide the notice, everything else becomes visible again */
+  /* Dismissed: hide the notice */
   body.mobile-dismissed .mobile-block {
     display: none;
   }
+
+  .btn-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #btn-grid-custom {
+    grid-template-columns: 1fr;
+  }
+
+  #clipboardIn,
+  #clipboardOut,
+  #redactPatterns {
+    font-size: 16px;
+  }
 }
 
-.mobile-dismiss-btn {
-  margin-top: 1.5rem;
-  padding: 12px 24px;
-  min-height: 44px;
-  border: none;
-  border-radius: 8px;
-  background: #f0f0f0;
-  color: #121212;
-  font-size: 14px;
-  cursor: pointer;
+/* Inactivate tooltip on mobile */
+@media (hover: none) {
+  [data-tooltip]::after,
+  [data-tooltip]::before {
+    display: none;
+  }
 }

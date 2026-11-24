@@ -35,8 +35,8 @@
     >
       <span aria-hidden="true">🦆🦆🦆🦆🦆🦆</span>
       <p>
-        ⚠️ This page isn't optimized for mobile yet... Visit on a desktop
-        browser for the full experience.
+        ⚠️ This app is designed for desktop screens and might feel cramped...
+        Visit on a desktop browser for the full experience.
       </p>
       <button id="mobileDismissBtn" class="mobile-dismiss-btn">
         Continue anyway
@@ -151,6 +151,14 @@
             <button class="redact-btn" id="redactBtn">Redact Custom</button>
             <button
               class="redact-btn"
+              id="ignoreCaseBtn"
+              aria-pressed="false"
+              data-tooltip="Ignore case of custom patterns."
+            >
+              Ignore Case: off
+            </button>
+            <button
+              class="redact-btn"
               id="reverseBtn"
               aria-pressed="false"
               data-tooltip="Reverses the order of the redaction pattern."
@@ -250,18 +258,6 @@
               data-tooltip="Use labelled placeholders: [REDACTED-DATE]"
               >Labelled</label
             >
-          </div>
-
-          <h3 class="section-label">Regex Flags</h3>
-          <div class="pill-group">
-            <input type="checkbox" id="ignoreCase" />
-
-            <label
-              for="ignoreCase"
-              class="pill"
-              data-tooltip="Case insensitive matching for custom redaction"
-              >Case-insensitive
-            </label>
           </div>
         </div>
       </div>
