@@ -92,14 +92,11 @@
               </button>
             </div>
           </div>
-          <div
+          <textarea
             id="clipboardIn"
-            contenteditable="true"
-            role="textbox"
-            aria-multiline="true"
             aria-label="Original text"
             placeholder="Dump your text here..."
-          ></div>
+          ></textarea>
         </div>
       </section>
 
@@ -136,11 +133,12 @@
             </div>
           </div>
 
-          <div
+          <textarea
             id="redactPatterns"
-            contenteditable="true"
+            aria-label="Custom redaction patterns"
             placeholder="One pattern per line. Append /%/word to replace instead of redact."
-          ></div>
+          >
+          </textarea>
 
           <div
             class="btn-grid"
@@ -195,14 +193,12 @@
               </button>
             </div>
           </div>
-          <div
+          <textarea
             id="clipboardOut"
-            contenteditable="false"
-            role="region"
-            aria-multiline="true"
             aria-label="Redacted output"
             placeholder="Redacted text appears here..."
-          ></div>
+            readonly
+          ></textarea>
         </div>
       </section>
     </main>
