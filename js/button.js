@@ -80,7 +80,7 @@ async function flushPatternButtonAction() {
 
 // COPY-PASTE BUTTON
 async function copyClipboardContent() {
-  const content = document.getElementById("clipboardOut").innerText;
+  const content = document.getElementById("clipboardOut").value;
   await navigator.clipboard.writeText(content);
 
   // Visual feedback
@@ -123,15 +123,6 @@ function getPlaceholder(type) {
 
 // INTERCEPT PASTE AND USE PLAIN-TEXT ONLY (CP STYLE NOT ALLOWED)
 const inputPane = document.getElementById("clipboardIn");
-
-function insertPlainText(e) {
-  e.preventDefault(); // prevent styled txt to enter DOM
-  const text = e.clipboardData.getData("text/plain");
-  if (text) document.execCommand("insertText", false, text);
-}
-
-inputPane.addEventListener("paste", insertPlainText);
-inputPane.addEventListener("drop", insertPlainText);
 
 // CUSTOM REDACTION BUTTONS
 
@@ -188,8 +179,8 @@ document
 
 // DEMO BUTTON
 document.getElementById("demoBtn").addEventListener("click", () => {
-  document.getElementById("clipboardIn").innerText = DEMO_TEXT;
-  document.getElementById("redactPatterns").innerText = DEMO_PATTERNS;
+  document.getElementById("clipboardIn").value = DEMO_TEXT;
+  document.getElementById("redactPatterns").value = DEMO_PATTERNS;
 });
 
 // REDACTION RADIO PILL FOR PLACEHOLDER

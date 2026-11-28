@@ -1,14 +1,12 @@
 // HELPER FUNCTIONS
 function flushOutput() {
-  document.getElementById("clipboardOut").textContent = "";
+  document.getElementById("clipboardOut").value = "";
 }
-
 function flushInput() {
-  document.getElementById("clipboardIn").textContent = "";
+  document.getElementById("clipboardIn").value = "";
 }
-
 function flushPattern() {
-  document.getElementById("redactPatterns").textContent = "";
+  document.getElementById("redactPatterns").value = "";
 }
 
 // REDACTION FUNCTIONS
@@ -19,21 +17,21 @@ const MAX_TEXT_BYTES = 500_000;
 async function redactTxtDOM(redactFunc, replacement = "█████") {
   const inEl = document.getElementById("clipboardIn");
   const outEl = document.getElementById("clipboardOut");
-  const source = outEl.innerText.trim() ? outEl : inEl;
+  const source = outEl.value.trim() ? outEl : inEl;
 
-  const text = source.innerText;
+  const text = source.value;
   if (new Blob([text]).size > MAX_TEXT_BYTES) {
     alert(`Text exceeds the ${MAX_TEXT_BYTES / 1000} KB limit.`);
     return;
   }
 
   // Feels more natural
-  if (inEl.innerText.trim() === "") {
+  if (inEl.value.trim() === "") {
     flushOutput();
   }
 
   // Apply redaction on output if non-empty
-  outEl.innerText = redactFunc(source.innerText, replacement);
+  outEl.value = redactFunc(source.value, replacement);
 }
 
 // Custom entity level function
@@ -259,7 +257,7 @@ function applyPatterns(
 
 async function redactText({ reversed = false, ignoreCase = false } = {}) {
   const el = document.getElementById("redactPatterns");
-  const patterns = buildPatternMap(el.innerText.split("\n"), reversed);
+  const patterns = buildPatternMap(el.value.split("\n"), reversed);
 
   try {
     if (patterns.size === 0) {

@@ -133,6 +133,9 @@
   outline: none;
   transition: var(--transition-base);
   box-shadow: var(--shadow-panel);
+  border: none;
+  resize: none;
+  display: block;
 }
 
 /* The two main clipboards fill the workspace; the patterns field
@@ -155,10 +158,9 @@
 }
 
 /* Placeholder text in text fields */
-#clipboardIn:empty::before,
-#clipboardOut:empty::before,
-#redactPatterns:empty::before {
-  content: attr(placeholder);
+#clipboardIn::placeholder,
+#clipboardOut::placeholder,
+#redactPatterns::placeholder {
   color: #666;
   font-style: italic;
 }
